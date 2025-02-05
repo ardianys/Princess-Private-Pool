@@ -31,7 +31,7 @@
                 </div>
             </div>
         </div>
-        <a href="{{ route('swimmingPools.index') }}" class="btn btn-secondary">Back to List</a>
+        <a href="{{ route('swimmingpools.index') }}" class="btn btn-secondary">Back to List</a>
     </div>
     @endsection
 

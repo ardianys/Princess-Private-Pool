@@ -20,6 +20,6 @@ class Booking extends Model
     }
     public function swimmingPool()
     {
-        return $this->belongsTo(SwimmingPool::class);
+        return $this->belongsTo(Swimmingpool::class);
     }
 }

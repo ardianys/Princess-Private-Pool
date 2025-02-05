@@ -24,7 +24,7 @@ class BookingController extends Controller
     {
         // dd($swimmingPoolID);
         // Mengambil data kolam renang berdasarkan ID yang diteruskan
-        $swimmingPool = SwimmingPool::findOrFail($swimmingPoolId);
+        $swimmingPool = Swimmingpool::findOrFail($swimmingPoolId);
 
         return view('bookings.create', compact('swimmingPool'));
     }
@@ -41,7 +41,7 @@ class BookingController extends Controller
         ]);
 
         // Ambil data kolam renang yang dipilih
-        $swimmingPool = SwimmingPool::findOrFail($request->swimming_pool_id);
+        $swimmingPool = Swimmingpool::findOrFail($request->swimming_pool_id);
 
         // Menghitung total biaya dengan tambahan 5%
         $totalCost = $swimmingPool->price_per_person * $request->number_of_people * 1.05;

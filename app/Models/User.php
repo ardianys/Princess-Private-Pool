@@ -54,7 +54,7 @@ class User extends Authenticatable
 
     public function swimmingpools()
     {
-        return $this->hasMany(SwimmingPool::class);
+        return $this->hasMany(Swimmingpool::class);
     }
 
 }
