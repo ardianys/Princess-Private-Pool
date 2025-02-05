@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
-use App\Models\SwimmingPool;
+use App\Models\Swimmingpool;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +22,7 @@ class BookingController extends Controller
     // Menampilkan form untuk booking
     public function create($swimmingPoolId): View
     {
-        dd($swimmingPoolID);
+        // dd($swimmingPoolID);
         // Mengambil data kolam renang berdasarkan ID yang diteruskan
         $swimmingPool = SwimmingPool::findOrFail($swimmingPoolId);
 
