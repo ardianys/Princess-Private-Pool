@@ -26,7 +26,7 @@ class BookingController extends Controller
         // Mengambil data kolam renang berdasarkan ID yang diteruskan
         $swimmingPool = Swimmingpool::findOrFail($swimmingPoolId);
 
-        return view('bookings.create', compact('swimmingPool'));
+        return view('bookings.create', compact('swimmingpool'));
     }
 
     // Menyimpan data booking
@@ -57,7 +57,7 @@ class BookingController extends Controller
         ]);
 
         // Redirect ke form booking dengan pesan sukses
-        return redirect()->route('bookings.create', ['swimmingPoolId' => $swimmingPool->id])->with('success', 'Booking berhasil!');
+        return redirect()->route('bookings.create', ['swimmingpoolId' => $swimmingPool->id])->with('success', 'Booking berhasil!');
     }
 
     // Menampilkan detail booking

@@ -5,16 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking Kolam Renang</title>
     <style>
-        /* Background linear gradient biru muda dan putih */
+        /* Background with gradient and water ripple effect */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to right, #87CEFA, #ffffff); /* Biru muda ke putih */
+            background: linear-gradient(to right, #00BFFF, #ADD8E6); /* Blue gradient */
+            background-size: 100% 100%;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.2) 20%, transparent 30%), url('https://cdn.pixabay.com/photo/2016/06/02/13/45/blue-1434311_960_720.jpg'); /* Adding water ripple effect */
+            background-position: center;
+            background-repeat: no-repeat;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
         }
 
         /* Container form booking */
@@ -26,6 +31,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             text-align: center;
+            z-index: 10;
         }
 
         /* Styling heading */

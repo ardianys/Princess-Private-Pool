@@ -42,13 +42,15 @@ class SwimmingpoolController extends Controller
 
         //upload image
         $image = $request->file('image');
-        if ($image) {$imagePath = $image->storeAs('public/swimmmingPools', $image->hashName());}
+        $imageName=$image->hashName();
+        $request->image->move(public_path('swimmmingpools'), $imageName);
+        // if ($image) {$imagePath = $image->storePubliclyAs('swimmmingpools', $image->hashName(),'s3');}
 
 
         // Create the swimming pool entry
         Swimmingpool::create([
             'user_id'          => Auth::id(),
-            'image'            => isset($imagePath) ? $request->file('mage')->hashName() : null,
+            'image'            => 'swimmmingpools/'.$imageName,
             'name'             => $request->name,
             'description'      => $request->description,
             'location'         => $request->location,
@@ -62,6 +64,6 @@ class SwimmingpoolController extends Controller
     public function show(String $id) : View
     {
         $swimmingpools = Swimmingpool::findorFall($id);
-        return view('swimmingpools.show', compact('swimmingPool'));
+        return view('swimmingpools.show', compact('swimmingpool'));
     }
 }
