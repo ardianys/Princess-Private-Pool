@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking Kolam Renang</title>
+    <title>Booking Swimming Pool</title>
     <style>
         /* Background with gradient and water ripple effect */
         body {
@@ -105,7 +105,7 @@
 <body>
 
     <div class="container">
-        <h1>Booking Kolam Renang: {{ $swimmingPool->name }}</h1>
+        <h1>Booking Swimming Pool: {{ $swimmingPool->name }}</h1>
 
         @if ($errors->any())
             <div class="error">
@@ -122,17 +122,17 @@
             <input type="hidden" name="swimming_pool_id" value="{{ $swimmingPool->id }}">
 
             <div>
-                <label for="number_of_people">Jumlah Orang:</label>
+                <label for="number_of_people">Number of People:</label>
                 <input type="number" name="number_of_people" id="number_of_people" required min="1" value="{{ old('number_of_people') }}">
             </div>
 
             <div>
-                <label for="booking_date">Tanggal Booking:</label>
+                <label for="booking_date">Booking Date:</label>
                 <input type="date" name="booking_date" id="booking_date" required value="{{ old('booking_date') }}">
             </div>
 
             <div>
-                <label for="booking_time">Jam Booking:</label>
+                <label for="booking_time">Booking Time:</label>
                 <input type="time" name="booking_time" id="booking_time" required value="{{ old('booking_time') }}">
             </div>
 

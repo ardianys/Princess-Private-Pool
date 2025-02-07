@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Booking</title>
+    <title>Booking List</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -59,16 +59,16 @@
 <body>
 
     <div class="container">
-        <h1>Daftar Booking Kolam Renang Anda</h1>
+        <h1>Swimming Pool Booking List</h1>
 
         @if($bookings->isEmpty())
-            <p class="no-bookings">Anda belum memiliki booking.</p>
+            <p class="no-bookings">You don't have any bookings yet.</p>
         @else
             <ul class="booking-list">
                 @foreach($bookings as $booking)
                     <li>
                         <span>{{ $booking->swimmingPool->name }} - {{ $booking->booking_date }} - {{ $booking->booking_time }}</span>
-                        <a href="{{ route('bookings.show', $booking->id) }}">Lihat Detail</a>
+                        <a href="{{ route('bookings.show', $booking->id) }}">More Detail</a>
                     </li>
                 @endforeach
             </ul>
