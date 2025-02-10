@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Create Swimming Pool</title>
-    <!-- Link ke CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         body {
-            background: linear-gradient(to bottom, #add8e6, #ffffff);
+            background: linear-gradient(to bottom right, #e0b0ff, #ADD8E6, #ffffff); /* Gradasi diagonal */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -18,15 +17,15 @@
             font-family: 'Arial', sans-serif;
             overflow-x: hidden;
         }
-        
+
         .sunlight-effect {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(255, 255, 255, 0.4);
-            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.6) 1px, transparent 1px);
+            background: rgba(255, 255, 255, 0.2);
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.3) 1px, transparent 1px);
             pointer-events: none;
         }
 
@@ -37,7 +36,7 @@
         .card {
             border: none;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.8);
         }
 
         .card-body {
@@ -46,7 +45,7 @@
 
         .card h1 {
             font-size: 2.5rem;
-            color: #0066cc;
+            color: #8A2BE2;
             font-weight: bold;
             text-align: center;
             margin-bottom: 30px;
@@ -65,12 +64,12 @@
         }
 
         .form-control:focus {
-            border-color: #0066cc;
-            box-shadow: 0 0 0 0.2rem rgba(0, 102, 204, 0.25);
+            border-color: #8A2BE2;
+            box-shadow: 0 0 0 0.2rem rgba(138, 43, 226, 0.25);
         }
 
         .btn-primary {
-            background-color: #0066cc;
+            background-color: #8A2BE2;
             border: none;
             padding: 12px 30px;
             font-size: 1.1rem;
@@ -80,7 +79,7 @@
         }
 
         .btn-primary:hover {
-            background-color: #005bb5;
+            background-color: #7B1FA2;
         }
 
         .alert {
@@ -102,7 +101,6 @@
                         <form action="{{ route('swimmingpools.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
-                            <!-- Name Field -->
                             <div class="mb-4">
                                 <label for="name" class="form-label">Name</label>
                                 <input type="text" class="form-control" name="name" id="name" required>
@@ -111,7 +109,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Description Field -->
                             <div class="mb-4">
                                 <label for="description" class="form-label">Description</label>
                                 <textarea class="form-control" name="description" id="description" rows="4"></textarea>
@@ -120,7 +117,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Location Field -->
                             <div class="mb-4">
                                 <label for="location" class="form-label">Location</label>
                                 <input type="text" class="form-control" name="location" id="location">
@@ -129,7 +125,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Price per Person Field -->
                             <div class="mb-4">
                                 <label for="price_per_person" class="form-label">Price per Person</label>
                                 <input type="number" class="form-control" name="price_per_person" id="price_per_person" step="0.01" min="0">
@@ -138,7 +133,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Image Upload Field -->
                             <div class="mb-4">
                                 <label for="image" class="form-label">Image</label>
                                 <input type="file" class="form-control" name="image" id="image" required>
@@ -147,7 +141,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Submit Button -->
                             <button type="submit" class="btn btn-primary">Create</button>
                         </form>
                     </div>
@@ -156,7 +149,6 @@
         </div>
     </div>
 
-    <!-- Script JS jika diperlukan -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

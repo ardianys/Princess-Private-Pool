@@ -19,6 +19,8 @@ Route::get('/home', function () {
 //rute resource
 Route::resource('/booking', \App\Http\Controller\BookingController::class);
 Route::resource('/swimmingpools', \App\Http\Controller\SwimmingpoolController::class);
+Route::get('/swimmingpools/{id}/edit', \App\Http\Controller\SwimmingpoolController::class, 'edit')->name('swimmingpools.edit');
+Route::get('/swimmingpools/{id}', \App\Http\Controller\SwimmingpoolController::class, 'show')->name('swimmingpools.show');
 Route::resource('/payments', \App\Http\Controller\PaymentController::class);
 
 Route::get('/dashboard', function () {
