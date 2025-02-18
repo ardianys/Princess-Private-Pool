@@ -4,14 +4,14 @@
 <div class="container">
     <h1 class="text-center text-white mb-4">Swimming Pool: {{ $swimmingpool->name }}</h1>
 
-    <div class="card border-0 shadow-sm rounded mb-4">
+    <div class="card border-0 shadow-lg rounded mb-4 swimming-pool-card">
         <div class="card-body">
-            <img src="{{ route('swimmingpools.create') }}" class="rounded" alt="Post Image" style="width: 100%">
+            <img src="{{ asset('/storage/swimmingpools/'.$swimmingpool->image) }}" alt="Post Image" class="rounded" style="width: 100%">
         </div>
     </div>
 
     <div class="col-md-8 mx-auto">
-        <div class="card border-0 shadow-sm rounded mb-4">
+        <div class="card border-0 shadow-lg rounded mb-4 swimming-pool-card">
             <div class="card-body">
                 <p><strong>Description:</strong> {{ $swimmingpool->description }}</p>
                 <p><strong>Location:</strong> {{ $swimmingpool->location }}</p>
@@ -34,17 +34,14 @@
     }
 
     body {
-    background: linear-gradient(to bottom right, #f8b0d4, #a8d0e6, #ffffff) !important;
-    background-color: #ffffff;  fallback jika gradient tidak muncul
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
-    font-family: 'Arial', sans-serif;
-    overflow-x: hidden;
-}
-
-
+        background: linear-gradient(to bottom right, #FFB6C1, #87CEFA, #ffffff) !important;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        position: relative;
+        font-family: 'Arial', sans-serif;
+        overflow-x: hidden;
+    }
 
     .sunlight-effect {
         position: absolute;
@@ -52,7 +49,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.3);
         background-image: radial-gradient(circle, rgba(255, 255, 255, 0.3) 1px, transparent 1px);
         pointer-events: none;
         z-index: 0;
@@ -67,17 +64,21 @@
         justify-content: center; /* Center content vertically */
     }
 
-    .card {
-        transition: transform 0.3s ease;
+    /* 3D Effect on Cards */
+    .swimming-pool-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
     }
 
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    .swimming-pool-card:hover {
+        transform: perspective(1000px) rotateX(10deg) rotateY(10deg);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
     }
 
     .card-body {
         padding: 20px;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 12px;
     }
 
     .btn-secondary {
@@ -100,15 +101,6 @@
         text-align: center;
     }
 
-    /* For swimming pool details section */
-    .pool-details p {
-        margin-bottom: 10px;
-    }
-
-    .pool-details i {
-        color: #777;
-    }
-
     /* Styling for the swimming pool page */
     .col-md-8 {
         margin: 0 auto;
@@ -118,4 +110,15 @@
         font-size: 2rem;
         font-weight: bold;
     }
+
+    /* Adding subtle background gradient effect for each section */
+    .card-body {
+        background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.4));
+    }
+
+    /* Soft Glow Effect for the Title */
+    h1 {
+        text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
 </style>

@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(to right, #FFB6C1, #87CEFA, #FFFFFF);
+            background: linear-gradient(135deg, #FFB6C1, #87CEFA, #FFFFFF);
             padding: 40px;
             margin: 0;
             height: 100vh;
@@ -15,6 +15,14 @@
             justify-content: center;
             align-items: center;
             color: #333;
+            background-size: 400% 400%;
+            animation: gradientAnimation 8s ease infinite;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .container {
@@ -23,7 +31,7 @@
             background-color: #fff;
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
             text-align: center;
         }
 
@@ -32,6 +40,7 @@
             font-weight: 600;
             margin-bottom: 20px;
             color: #2c3e50;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
         }
 
         .booking-list {
@@ -48,13 +57,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
 
         .booking-list li:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
         }
 
         .booking-list span {

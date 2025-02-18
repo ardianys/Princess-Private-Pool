@@ -8,14 +8,25 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
         body {
-            background: linear-gradient(to bottom right, #e0b0ff, #ADD8E6, #ffffff); /* Gradasi diagonal */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            position: relative;
             font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #FFB6C1, #87CEFA, #FFFFFF);
+            background-size: 400% 400%;
+            animation: gradientAnimation 8s ease infinite;
+            position: relative;
             overflow-x: hidden;
+            color: #333;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .sunlight-effect {
@@ -27,16 +38,29 @@
             background: rgba(255, 255, 255, 0.2);
             background-image: radial-gradient(circle, rgba(255, 255, 255, 0.3) 1px, transparent 1px);
             pointer-events: none;
+            z-index: 0;
         }
 
         .container {
             padding-top: 50px;
+            z-index: 1;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
         }
 
         .card {
             border: none;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             background-color: rgba(255, 255, 255, 0.8);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
         }
 
         .card-body {
@@ -85,6 +109,7 @@
         .alert {
             margin-top: 10px;
         }
+
     </style>
 </head>
 <body>

@@ -14,13 +14,19 @@
         }
 
         body {
-            background: linear-gradient(to bottom right, #e0b0ff, #ADD8E6, #ffffff);
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            position: relative;
             font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #FFB6C1, #87CEFA, #FFFFFF);
+            background-size: 400% 400%;
+            animation: gradientAnimation 8s ease infinite;
+            position: relative;
             overflow-x: hidden;
+            color: #333;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .sunlight-effect {
@@ -40,70 +46,91 @@
             z-index: 1;
             min-height: 100%;
             display: flex;
-            flex-direction: column; /* Konten diatur dalam kolom */
-        }
-
-        /* Styles for the swimming pool list */
-        .pool-list-container {
-            padding: 20px;
-            /* background: linear-gradient(to bottom, #c8e6f4, #ffffff);  */
-            flex: 1; /* Memungkinkan konten utama untuk mengisi ruang yang tersedia */
+            flex-direction: column;
+            text-align: center;
         }
 
         .pool-list-title {
-            color: #007bff;
             font-family: 'Arial Black', sans-serif;
             font-size: 2.5rem;
             font-weight: bold;
-            text-align: center;
             margin-bottom: 2rem;
+            color: #2c3e50;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
         }
 
         .pool-list-create-button {
             background-color: #3498db;
             color: white;
-            padding: 8px 16px;
-            border-radius: 5px;
+            padding: 10px 20px;
+            border-radius: 8px;
             text-decoration: none;
-            transition: background-color 0.3s ease;
-            font-size: 0.9rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-size: 1rem;
             margin-bottom: 2rem;
             display: inline-block;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .pool-list-create-button:hover {
+            background-color: #2980b9;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
         }
 
         .pool-card-container {
             display: flex;
-            overflow-x: auto;
-            white-space: nowrap;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
         }
 
         .pool-card {
-            width: 350px;
-            margin-right: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border: none;
+            width: 300px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
             background-color: #f8f9fa;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
         .pool-card img {
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
             object-fit: cover;
             height: 200px;
+            width: 100%;
         }
+
         .pool-card-body {
             padding: 20px;
         }
+
         .pool-card-title {
-            color: #3498db;
+            font-size: 1.2rem;
             font-weight: bold;
+            color: #3498db;
         }
+
         .pool-card-text {
             color: #555;
+            margin-bottom: 15px;
         }
+
         .pool-card-link {
             color: #3498db;
             text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .pool-card-link:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+
+        .pool-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
@@ -120,9 +147,7 @@
         <div class="pool-card-container">
             @foreach($swimmingpools as $swimmingpool)
             <div class="pool-card">
-                @if($swimmingpool->imageName)
-                <img src="{{ Storage::url($swimmingpool->image) }}" class="card-img-top" alt="{{ $swimmingpool->name }}">
-                @endif
+                <img src="{{ asset('storage/swimmingpools/'.$swimmingpool->image) }}" class="rounded">
                 <div class="pool-card-body">
                     <h5 class="pool-card-title">{{ $swimmingpool->name }}</h5>
                     <p class="pool-card-text">{{ $swimmingpool->description }}</p>
