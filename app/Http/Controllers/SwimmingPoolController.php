@@ -38,7 +38,7 @@ class SwimmingpoolController extends Controller
 
          //upload image
          $image = $request->file('image');
-         if ($image) {$imagePath = $image->storeAs('public/swimmingpools', $image->hashName());}
+         if ($image) {$imagePath = $image->store('public/swimmingpools');}
  
 
         // $image = $request->file('image');  
@@ -140,7 +140,7 @@ class SwimmingpoolController extends Controller
         $swimmingpool = Swimmingpool::findOrFail($id); // Mengambil kolam renang berdasarkan ID  
 
         // Hapus gambar dari storage jika ada  
-        if ($swimmingpool->image && Storage::exists('public/' . $swimmingpool->image)) {  
+        if ($swimmingpool->image && Storage::exists('storage/' . $swimmingpool->image)) {  
             Storage::delete('public/' . $swimmingpool->image);  
         }  
 

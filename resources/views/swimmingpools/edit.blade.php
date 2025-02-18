@@ -55,7 +55,7 @@
                     @enderror
                     <div class="mt-3">
                         <strong>Current Image:</strong><br>
-                        <img src="{{ asset('/storage/swimmingPool/'.$swimmingpool->image) }}" class="rounded" alt="Current Image" style="width: 100px;">
+                        <img src="{{ asset('/storage/'.$swimmingpool->image) }}" class="rounded" alt="Current Image" style="width: 100px;">
                     </div>
                 </div>
 
