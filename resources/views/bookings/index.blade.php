@@ -6,53 +6,83 @@
     <title>Booking List</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #87CEFA, #ffffff);
-            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #FFB6C1, #87CEFA, #FFFFFF);
+            padding: 40px;
             margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
         }
 
         .container {
-            max-width: 900px;
-            margin: 0 auto;
+            width: 100%;
+            max-width: 950px;
             background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            text-align: center;
         }
 
         h1 {
-            text-align: center;
-            color: #333;
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #2c3e50;
         }
 
         .booking-list {
             list-style-type: none;
             padding: 0;
+            margin-top: 20px;
         }
 
         .booking-list li {
-            background-color: #f9f9f9;
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 6px;
+            background-color: #F9F9F9;
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .booking-list li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .booking-list span {
+            font-size: 18px;
+            font-weight: 500;
+            color: #2c3e50;
         }
 
         .booking-list a {
+            font-size: 16px;
             color: #3498db;
             text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
         }
 
         .booking-list a:hover {
-            text-decoration: underline;
+            background-color: #3498db;
+            color: #fff;
+            text-decoration: none;
         }
 
         .no-bookings {
-            text-align: center;
-            color: gray;
+            font-size: 20px;
+            color: #888;
+            margin-top: 30px;
         }
     </style>
 </head>

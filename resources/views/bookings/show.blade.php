@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #87CEFA, #ffffff);
+            background: linear-gradient(to right, #87CEFA, #FFB6C1, #ffffff);
             padding: 20px;
             margin: 0;
         }

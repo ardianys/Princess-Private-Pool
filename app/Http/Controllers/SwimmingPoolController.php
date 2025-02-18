@@ -1,144 +1,113 @@
-<?php
+<?php  
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers;  
 
-use App\Models\Swimmingpool;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-use Illuminate\View\View;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\RedirectResponse;
+use App\Models\Swimmingpool;  
+use Illuminate\Http\Request;  
+use Illuminate\Support\Facades\Auth;  
+use Illuminate\Support\Facades\Storage;  
+use Illuminate\View\View;  
+use Illuminate\Http\RedirectResponse;  
 
-class SwimmingpoolController extends Controller
-{
-      // Menampilkan daftar kolam renang
-      public function index() : View
-      {
-          $swimmingpool = Swimmingpool::all(); // Ambil semua kolam renang dari database
-          return view('swimmingpools.index', compact('swimmingpool'));
-      }
-  
-    
-    public function create() : View
-    {
-        return view('swimmingpools.create');
-    }
+class SwimmingpoolController extends Controller  
+{  
 
-    // Menyimpan data booking
-    public function store(Request $request) : RedirectResponse
-    {
-        $request->validate([
-            'image'            => 'required|image|mimes:jpeg,jpg,png|max:2048',
-            'name'             => 'required|string',
-            'description'      => 'nullable|string',
-            'location'         => 'nullable|string',
-            'price_per_person' => 'nullable|numeric',
-        ]);
+    // Menampilkan daftar semua kolam renang  
+    public function index(): View  
+    {  
+        $swimmingpools = Swimmingpool::all(); // Mengambil semua data kolam renang  
+        return view('swimmingpools.index', compact('swimmingpools'));  
+    }  
 
-        // Pastikan pengguna sudah login
-        if (!Auth::check()) {
-            return redirect()->route('login')->withErrors('Please login to create a swimmingpool.');
-        }
+    // Menampilkan form untuk membuat kolam renang  
+    public function create(): View  
+    {  
+        return view('swimmingpools.create');  
+    }  
 
-        //upload image
-        $image = $request->file('image');
-        $imageName=$image->hashName();
-        $imageName = $image->storeAs('swimmingpools', $imageName, 'public');
-        // if ($image) {$imagePath = $image->storePubliclyAs('swimmmingpools', $image->hashName(),'s3');}
+    // Menyimpan kolam renang yang baru dibuat  
+    public function store(Request $request): RedirectResponse  
+    {  
+        $request->validate([  
+            'image' => 'required|image|mimes:jpeg,jpg,png|max:2048',  
+            'name' => 'required|string',  
+            'description' => 'nullable|string',  
+            'location' => 'nullable|string',  
+            'price_per_person' => 'nullable|numeric|min:1',  
+        ]);  
 
+        $image = $request->file('image');  
+        $imagePath = $image->storeAs('swimmingpools', $image->hashName(), 'public');  
 
-        // Create the swimming pool entry
-        Swimmingpool::create([
-            'user_id'          => Auth::id(),
-            'image'            => 'swimmingpools/'.$imageName,
-            'name'             => $request->name,
-            'description'      => $request->description,
-            'location'         => $request->location,
-            'price_per_person' => $request->price_per_person,
-        ]);
+        Swimmingpool::create([  
+            'user_id' => Auth::id(),  
+            'image' => $imagePath,  
+            'name' => $request->name,  
+            'description' => $request->description,  
+            'location' => $request->location,  
+            'price_per_person' => $request->price_per_person,  
+        ]);  
 
-        return redirect()->route('swimmingpools.index')->with('success', 'Swimming pool created successfully!');
-    }
+        return redirect()->route('swimmingpools.index')->with('success', 'Swimming pool created successfully!');  
+    }  
 
-    // Menampilkan detail kolam renang
-    public function show(String $id) : View
-    {
-         // Mencari kolam renang berdasarkan ID
-        $swimmingpool = Swimmingpool::findOrFail($id);
+    // Menampilkan detail kolam renang berdasarkan ID  
+    public function show($id): View  
+    {  
+        $swimmingpool = Swimmingpool::findOrFail($id); // Mengambil kolam renang berdasarkan ID  
+        return view('swimmingpools.show', compact('swimmingpool'));  
+    }  
 
-        // Mengambil nama pengguna yang terkait dengan kolam renang
-        $userName = $swimmingpool->user->name;  // pastikan relasi user() sudah ada di model Swimmingpool
+    // Menampilkan form untuk mengedit kolam renang  
+    public function edit($id): View  
+    {  
+        $swimmingpool = Swimmingpool::findOrFail($id); // Mengambil kolam renang berdasarkan ID  
+        return view('swimmingpools.edit', compact('swimmingpool'));  
+    }  
 
-        return view('swimmingpools.show', compact('swimmingpool','userName'));
-    }
+    // Memperbarui data kolam renang  
+    public function update(Request $request, $id): RedirectResponse  
+    {  
+        $swimmingpool = Swimmingpool::findOrFail($id); // Mengambil kolam renang berdasarkan ID  
 
-    public function edit($id)
-    {
-        // Mencari kolam renang berdasarkan ID yang diberikan atau melemparkan pengecualian jika tidak ditemukan
-        $swimmingpool = Swimmingpool::findOrFail($id);
+        $request->validate([  
+            'image' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',  
+            'name' => 'required|string',  
+            'description' => 'nullable|string',  
+            'location' => 'nullable|string',  
+            'price_per_person' => 'nullable|numeric|min:1',  
+        ]);  
 
-        // Mengirim data kolam renang ke view 'edit'
-        return view('swimmingpools.edit', compact('swimmingpool'));
-    }
+        // Cek jika ada gambar baru diupload  
+        if ($request->hasFile('image')) {  
+            // Hapus gambar lama jika ada  
+            if ($swimmingpool->image && Storage::exists('public/' . $swimmingpool->image)) {  
+                Storage::delete('public/' . $swimmingpool->image);  
+            }  
 
-     /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id)
-    {
-        //get post id
-        $swimmingpool = Swimmingpool::findOrFail($id);
+            $image = $request->file('image');  
+            $imagePath = $image->storeAs('swimmingpools', $image->hashName(), 'public');  
+            $swimmingpool->image = $imagePath; // Simpan path gambar baru  
+        }  
 
-        //check if image upload or not
-        if ($request->hasFile('image')) {
+        $swimmingpool->fill($request->except(['image'])); // Update kolam renang kecuali gambar  
+        $swimmingpool->save(); // Simpan perubahan  
 
-            //upload new image
-            $imageName = $request->file('image');
-            $imageName->storeAs(public_path('swimmingpools'), $imageName);
+        return redirect()->route('swimmingpools.index')->with('success', 'Swimming pool updated successfully!');  
+    }  
 
-            //delete old image
-            unlink(public_path('swimmingpools/'.$swimmingpool->image));
+    // Menghapus kolam renang  
+    public function destroy($id): RedirectResponse  
+    {  
+        $swimmingpool = Swimmingpool::findOrFail($id); // Mengambil kolam renang berdasarkan ID  
 
-            //update post with new image
-            $swimmingpool->update([
-                'user_id'          => Auth::id(),
-                'image'            => 'swimmingpools/'.$imageName,
-                'name'             => $request->name,
-                'description'      => $request->description,
-                'location'         => $request->location,
-                'price_per_person' => $request->price_per_person,
-            ]);
-        } else {
-            //update post without image
-            $swimmingpool->update([
-                'user_id'          => Auth::id(),
-                'name'             => $request->name,
-                'description'      => $request->description,
-                'location'         => $request->location,
-                'price_per_person' => $request->price_per_person,
-            ]);
-        }
-        //redirect to index
-        return redirect()->route('swimmingpools.index')->with(['success' => 'Data Successfully Changed!']);
+        // Hapus gambar dari storage jika ada  
+        if ($swimmingpool->image && Storage::exists('public/' . $swimmingpool->image)) {  
+            Storage::delete('public/' . $swimmingpool->image);  
+        }  
+
+        $swimmingpool->delete(); // Hapus kolam renang dari database  
         
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id) : RedirectResponse
-    {
-        $swimmingpool = Swimmingpool::findOrFail($id);
-
-        //delete image
-        unlink(public_path('swimmingpools/'. $swimmingpool->image));
-
-        //delete post
-        $swimmingpool->delete();
-
-        //delete to index
-        return redirect()->route('swimmingpools.index')->with(['success' => 'Data Successfully Deleted!']);
-    }
-
-    
+        return redirect()->route('swimmingpools.index')->with('success', 'Swimming pool deleted successfully!');  
+    }  
 }

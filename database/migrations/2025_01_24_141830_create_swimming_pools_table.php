@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('swimmingpools', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('image');
             $table->string('name');
             $table->text('description')->nullable;
             $table->string('location')->nullable;
-            $table->decimal('price_per_person', 8, 2)->nullable;
+            $table->integer('price_per_person')->nullable;
             $table->timestamps();
         });
     }

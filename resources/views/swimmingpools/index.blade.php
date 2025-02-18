@@ -118,7 +118,7 @@
         </div>
 
         <div class="pool-card-container">
-            @foreach($swimmingpool as $swimmingpool)
+            @foreach($swimmingpools as $swimmingpool)
             <div class="pool-card">
                 @if($swimmingpool->imageName)
                 <img src="{{ Storage::url($swimmingpool->image) }}" class="card-img-top" alt="{{ $swimmingpool->name }}">
