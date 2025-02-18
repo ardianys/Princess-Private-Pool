@@ -132,19 +132,19 @@ class SwimmingpoolController extends Controller
     // Menghapus kolam renang  
     public function destroy($id): RedirectResponse  
     {  
-        //delete image
-        Storage::delete('public/swimmingpools/'. $swimmingpool->image);
+        // //delete image
+        // Storage::delete('public/swimmingpools/'. $swimmingpool->image);
 
-        //delete post
-        $swimmingpool->delete();
-        // $swimmingpool = Swimmingpool::findOrFail($id); // Mengambil kolam renang berdasarkan ID  
+        // //delete post
+        // $swimmingpool->delete();
+        $swimmingpool = Swimmingpool::findOrFail($id); // Mengambil kolam renang berdasarkan ID  
 
-        // // Hapus gambar dari storage jika ada  
-        // if ($swimmingpool->image && Storage::exists('public/' . $swimmingpool->image)) {  
-        //     Storage::delete('public/' . $swimmingpool->image);  
-        // }  
+        // Hapus gambar dari storage jika ada  
+        if ($swimmingpool->image && Storage::exists('public/' . $swimmingpool->image)) {  
+            Storage::delete('public/' . $swimmingpool->image);  
+        }  
 
-        // $swimmingpool->delete(); // Hapus kolam renang dari database  
+        $swimmingpool->delete(); // Hapus kolam renang dari database  
         
         return redirect()->route('swimmingpools.index')->with('success', 'Swimming pool deleted successfully!');  
     }  

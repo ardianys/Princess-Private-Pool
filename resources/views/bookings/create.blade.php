@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking Swimming Pool</title>
     <style>
-        /* Background with gradient and water ripple effect */
+        /* Background and form styling */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to right, #00BFFF, #ADD8E6); /* Blue gradient */
+            background: linear-gradient(to right, #00BFFF, #ADD8E6);
             background-size: 100% 100%;
-            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.2) 20%, transparent 30%), url('https://cdn.pixabay.com/photo/2016/06/02/13/45/blue-1434311_960_720.jpg'); /* Adding water ripple effect */
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.2) 20%, transparent 30%), url('https://cdn.pixabay.com/photo/2016/06/02/13/45/blue-1434311_960_720.jpg');
             background-position: center;
             background-repeat: no-repeat;
             height: 100vh;
@@ -22,7 +22,6 @@
             overflow: hidden;
         }
 
-        /* Container form booking */
         .container {
             background-color: #ffffff;
             width: 100%;
@@ -34,14 +33,12 @@
             z-index: 10;
         }
 
-        /* Styling heading */
         h1 {
             color: #2c3e50;
             font-size: 28px;
             margin-bottom: 20px;
         }
 
-        /* Styling untuk label input */
         label {
             font-size: 16px;
             color: #333;
@@ -50,7 +47,6 @@
             text-align: left;
         }
 
-        /* Styling input field */
         input, select, button {
             width: 100%;
             padding: 12px;
@@ -65,7 +61,6 @@
             outline: none;
         }
 
-        /* Styling button */
         button {
             background-color: #3498db;
             color: white;
@@ -78,7 +73,6 @@
             background-color: #2980b9;
         }
 
-        /* Styling untuk error dan success message */
         .error {
             color: red;
             font-size: 14px;
@@ -91,7 +85,6 @@
             margin-bottom: 20px;
         }
 
-        /* Styling form error list */
         ul {
             list-style: none;
             padding: 0;
@@ -109,6 +102,7 @@
 
         @if ($errors->any())
             <div class="error">
+                <strong>Please fix the following errors:</strong>
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -123,17 +117,17 @@
 
             <div>
                 <label for="number_of_people">Number of People:</label>
-                <input type="number" name="number_of_people" id="number_of_people" required min="1" value="{{ old('number_of_people') }}">
+                <input type="number" name="number_of_people" id="number_of_people" required min="1" value="{{ old('number_of_people') }}" placeholder="Enter number of people">
             </div>
 
             <div>
                 <label for="booking_date">Booking Date:</label>
-                <input type="date" name="booking_date" id="booking_date" required value="{{ old('booking_date') }}">
+                <input type="date" name="booking_date" id="booking_date" required min="{{ \Carbon\Carbon::today()->toDateString() }}" value="{{ old('booking_date') }}" placeholder="Select booking date">
             </div>
 
             <div>
                 <label for="booking_time">Booking Time:</label>
-                <input type="time" name="booking_time" id="booking_time" required value="{{ old('booking_time') }}">
+                <input type="time" name="booking_time" id="booking_time" required value="{{ old('booking_time') }}" placeholder="Select booking time">
             </div>
 
             <div>

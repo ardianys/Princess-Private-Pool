@@ -92,6 +92,7 @@
             font-size: 20px;
             color: #888;
             margin-top: 30px;
+            font-weight: 600;
         }
     </style>
 </head>
@@ -106,11 +107,14 @@
             <ul class="booking-list">
                 @foreach($bookings as $booking)
                     <li>
-                        <span>{{ $booking->swimmingPool->name }} - {{ $booking->booking_date }} - {{ $booking->booking_time }}</span>
+                        <span>{{ $booking->swimmingpool->name }} - {{ $booking->booking_date }} - {{ $booking->booking_time }}</span>
                         <a href="{{ route('bookings.show', $booking->id) }}">More Detail</a>
                     </li>
                 @endforeach
             </ul>
+            <div>
+                {{$bookings->links()}}
+            </div>
         @endif
     </div>
 

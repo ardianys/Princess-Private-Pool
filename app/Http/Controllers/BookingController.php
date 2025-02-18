@@ -20,11 +20,11 @@ class BookingController extends Controller
     }
 
     // Menampilkan form untuk booking
-    public function create($swimmingPoolId): View
+    public function create($swimmingpoolId): View
     {
         // dd($swimmingPoolID);
         // Mengambil data kolam renang berdasarkan ID yang diteruskan
-        $swimmingPool = Swimmingpool::findOrFail($swimmingPoolId);
+        $swimmingpool = Swimmingpool::findOrFail($swimmingpoolId);
 
         return view('bookings.create', compact('swimmingpool'));
     }
@@ -41,10 +41,10 @@ class BookingController extends Controller
         ]);
 
         // Ambil data kolam renang yang dipilih
-        $swimmingPool = Swimmingpool::findOrFail($request->swimming_pool_id);
+        $swimmingpool = Swimmingpool::findOrFail($request->swimming_pool_id);
 
         // Menghitung total biaya dengan tambahan 5%
-        $totalCost = $swimmingPool->price_per_person * $request->number_of_people * 1.05;
+        $totalCost = $swimmingpool->price_per_person * $request->number_of_people * 1.05;
 
         // Menyimpan data booking ke database
         $booking = Booking::create([

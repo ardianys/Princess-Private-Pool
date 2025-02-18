@@ -147,7 +147,7 @@
         <div class="pool-card-container">
             @foreach($swimmingpools as $swimmingpool)
             <div class="pool-card">
-                <img src="{{ asset('storage/swimmingpools/'.$swimmingpool->image) }}" class="rounded">
+                <img src="{{ asset('storage/'.$swimmingpool->image) }}" class="rounded">
                 <div class="pool-card-body">
                     <h5 class="pool-card-title">{{ $swimmingpool->name }}</h5>
                     <p class="pool-card-text">{{ $swimmingpool->description }}</p>

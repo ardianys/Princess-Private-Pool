@@ -6,7 +6,7 @@
 
     <div class="card border-0 shadow-lg rounded mb-4 swimming-pool-card">
         <div class="card-body">
-            <img src="{{ asset('/storage/swimmingpools/'.$swimmingpool->image) }}" alt="Post Image" class="rounded" style="width: 100%">
+            <img src="{{ asset('/storage/'.$swimmingpool->image) }}" alt="Post Image" class="rounded" style="width: 100%">
         </div>
     </div>
 
