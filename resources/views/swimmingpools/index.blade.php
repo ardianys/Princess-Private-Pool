@@ -151,6 +151,12 @@
                 <div class="pool-card-body">
                     <h5 class="pool-card-title">{{ $swimmingpool->name }}</h5>
                     <p class="pool-card-text">{{ $swimmingpool->description }}</p>
+                    <p class="pool-card-text">
+                        <strong>Operational Days:</strong> {{ implode(', ', json_decode($swimmingpool->operational_days, true)) }}
+                    </p>
+                    <p class="pool-card-text">
+                        <strong>Hours:</strong> {{ $swimmingpool->opening_time }} - {{ $swimmingpool->closing_time }}
+                    </p>                    
                     <a href="{{ route('swimmingpools.show', $swimmingpool->id) }}" class="pool-card-link">View Details</a>
                 </div>
             </div>

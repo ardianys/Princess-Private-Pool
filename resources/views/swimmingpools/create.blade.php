@@ -127,6 +127,14 @@
                             @csrf
 
                             <div class="mb-4">
+                                <label for="image" class="form-label">Image</label>
+                                <input type="file" class="form-control" name="image" id="image" required>
+                                @error('image')
+                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-4">
                                 <label for="name" class="form-label">Name</label>
                                 <input type="text" class="form-control" name="name" id="name" required>
                                 @error('name')
@@ -151,17 +159,26 @@
                             </div>
 
                             <div class="mb-4">
+                                <label class="form-label">Operational Days</label><br>
+                                @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
+                                    <input type="checkbox" name="operational_days[]" value="{{ $day }}"> {{ $day }} <br>
+                                @endforeach
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="opening_time" class="form-label">Opening Time</label>
+                                <input type="time" class="form-control" name="opening_time" required>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="closing_time" class="form-label">Closing Time</label>
+                                <input type="time" class="form-control" name="closing_time" required>
+                            </div>                            
+
+                            <div class="mb-4">
                                 <label for="price_per_person" class="form-label">Price per Person</label>
                                 <input type="number" class="form-control" name="price_per_person" id="price_per_person" step="0.01" min="0">
                                 @error('price_per_person')
-                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-4">
-                                <label for="image" class="form-label">Image</label>
-                                <input type="file" class="form-control" name="image" id="image" required>
-                                @error('image')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                 @enderror
                             </div>

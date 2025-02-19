@@ -10,6 +10,19 @@
                 @csrf
                 @method('PUT')
 
+                <!-- Image Upload Field -->
+                <div class="mb-4">
+                    <label for="image" class="form-label">Image</label>
+                    <input type="file" class="form-control" name="image" id="image">
+                    @error('image')
+                        <div class="alert alert-danger mt-2">{{ $message }}</div>
+                    @enderror
+                    <div class="mt-3">
+                        <strong>Current Image:</strong><br>
+                        <img src="{{ asset('/storage/'.$swimmingpool->image) }}" class="rounded" alt="Current Image" style="width: 100px;">
+                    </div>
+                </div>
+
                 <!-- Name Field -->
                 <div class="mb-4">
                     <label for="name" class="form-label">Name</label>
@@ -37,6 +50,28 @@
                     @enderror
                 </div>
 
+                <!-- Operational Days -->
+                <div class="mb-4">
+                    <label class="form-label">Operational Days</label><br>
+                    @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
+                        <input type="checkbox" name="operational_days[]" value="{{ $day }}"
+                            {{ in_array($day, json_decode($swimmingpool->operational_days, true)) ? 'checked' : '' }}> {{ $day }} <br>
+                    @endforeach
+                </div>
+                
+                <!-- Opening Time -->                
+                <div class="mb-4">
+                    <label for="opening_time" class="form-label">Opening Time</label>
+                    <input type="time" class="form-control" name="opening_time" value="{{ $swimmingpool->opening_time }}" required>
+                </div>
+                
+                <!-- Closing Time -->
+                <div class="mb-4">
+                    <label for="closing_time" class="form-label">Closing Time</label>
+                    <input type="time" class="form-control" name="closing_time" value="{{ $swimmingpool->closing_time }}" required>
+                </div>
+                
+
                 <!-- Price per Person Field -->
                 <div class="mb-4">
                     <label for="price_per_person" class="form-label">Price per Person</label>
@@ -44,19 +79,6 @@
                     @error('price_per_person')
                         <div class="alert alert-danger mt-2">{{ $message }}</div>
                     @enderror
-                </div>
-
-                <!-- Image Upload Field -->
-                <div class="mb-4">
-                    <label for="image" class="form-label">Image</label>
-                    <input type="file" class="form-control" name="image" id="image">
-                    @error('image')
-                        <div class="alert alert-danger mt-2">{{ $message }}</div>
-                    @enderror
-                    <div class="mt-3">
-                        <strong>Current Image:</strong><br>
-                        <img src="{{ asset('/storage/'.$swimmingpool->image) }}" class="rounded" alt="Current Image" style="width: 100px;">
-                    </div>
                 </div>
 
                 <!-- Submit Button -->
