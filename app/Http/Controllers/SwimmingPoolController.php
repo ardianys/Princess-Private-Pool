@@ -33,20 +33,11 @@ class SwimmingpoolController extends Controller
             'name'              => 'required|string',  
             'description'       => 'nullable|string',  
             'location'          => 'nullable|string',
-            'operational_days'  => 'required|array',
-            'operational_days.*'=> 'in:Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday',
-            'opening_time'      => 'required|date_format:H:i',
-            'closing_time'      => 'required|date_format:H:i|after:opening_time',
             'price_per_person'  => 'nullable|numeric|min:1',  
         ]);  
 
          //upload image
          $imagePath = $request->file('image')->store('swimmingpools', 'public');
-
-        //  $image = $request->file('image');
-        //  if ($image) {$imagePath = $image->store('public/swimmingpools');}
-        // $image = $request->file('image');  
-        // $imagePath = $image->storeAs('swimmingpools', $image->hashName(), 'public');  
 
         Swimmingpool::create([  
             'user_id'           => Auth::id(),  
@@ -54,10 +45,7 @@ class SwimmingpoolController extends Controller
             'name'              => $request->name,  
             'description'       => $request->description,  
             'location'          => $request->location,
-            'operational_days'  => json_encode($request->operational_days),  
-            'opening_time'      => $request->opening_time,  
-            'closing_time'      => $request->closing_time, 
-            'price_per_person'  => json_decode($request->price_per_person, true),  
+            'price_per_person'  => $request->price_per_person,  
         ]);  
 
         return redirect()->route('swimmingpools.index')->with('success', 'Swimming pool created successfully!');  
@@ -83,14 +71,10 @@ class SwimmingpoolController extends Controller
         $swimmingpool = Swimmingpool::findOrFail($id); // Mengambil kolam renang berdasarkan ID  
 
         $request->validate([  
-            'image'             => 'required|image|mimes:jpeg,jpg,png|max:2048',  
+            'image'             => 'nullable|image|mimes:jpeg,jpg,png|max:2048',  
             'name'              => 'required|string',  
             'description'       => 'nullable|string',  
             'location'          => 'nullable|string',
-            'operational_days'  => 'required|array',
-            'operational_days.*'=> 'in:Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday',
-            'opening_time'      => 'required|date_format:H:i',
-            'closing_time'      => 'required|date_format:H:i|after:opening_time',
             'price_per_person'  => 'nullable|numeric|min:1',
         ]);  
 
@@ -107,15 +91,12 @@ class SwimmingpoolController extends Controller
             $swimmingpool->image = $imagePath;
         }
 
-            //update pwithout image
+            //update without image
             $swimmingpool->update([
                 'name'              => $request->name,  
                 'description'       => $request->description,  
                 'location'          => $request->location,
-                'operational_days'  => json_encode($request->operational_days),  
-                'opening_time'      => $request->opening_time,  
-                'closing_time'      => $request->closing_time,
-                'price_per_person'  => json_docode($request->price_per_person, true),
+                'price_per_person'  => $request->price_per_person,
             ]);
 
         return redirect()->route('swimmingpools.index')->with('success', 'Swimming pool updated successfully!');  
@@ -124,11 +105,6 @@ class SwimmingpoolController extends Controller
     // Menghapus kolam renang  
     public function destroy($id): RedirectResponse  
     {  
-        // //delete image
-        // Storage::delete('public/swimmingpools/'. $swimmingpool->image);
-
-        // //delete post
-        // $swimmingpool->delete();
         $swimmingpool = Swimmingpool::findOrFail($id); // Mengambil kolam renang berdasarkan ID  
 
         // Hapus gambar dari storage jika ada  

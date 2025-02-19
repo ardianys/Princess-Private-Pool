@@ -15,8 +15,6 @@
             <div class="card-body">
                 <p><strong>Description:</strong> {{ $swimmingpool->description }}</p>
                 <p><strong>Location:</strong> {{ $swimmingpool->location }}</p>
-                <p><strong>Operational Days:</strong> {{ implode(', ', json_decode($swimmingpool->operational_days, true)) }}</p>
-                <p><strong>Opening Hours:</strong> {{ $swimmingpool->opening_time }} - {{ $swimmingpool->closing_time }}</p>
                 <p><strong>Price per person:</strong> ${{ number_format($swimmingpool->price_per_person, 2) }}</p>
                 <p><strong>Created by:</strong> {{ $swimmingpool->user->name }}</p>
             </div>

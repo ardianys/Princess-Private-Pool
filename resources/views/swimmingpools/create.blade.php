@@ -156,24 +156,7 @@
                                 @error('location')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                 @enderror
-                            </div>
-
-                            <div class="mb-4">
-                                <label class="form-label">Operational Days</label><br>
-                                @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
-                                    <input type="checkbox" name="operational_days[]" value="{{ $day }}"> {{ $day }} <br>
-                                @endforeach
-                            </div>
-                            
-                            <div class="mb-4">
-                                <label for="opening_time" class="form-label">Opening Time</label>
-                                <input type="time" class="form-control" name="opening_time" required>
-                            </div>
-                            
-                            <div class="mb-4">
-                                <label for="closing_time" class="form-label">Closing Time</label>
-                                <input type="time" class="form-control" name="closing_time" required>
-                            </div>                            
+                            </div>                 
 
                             <div class="mb-4">
                                 <label for="price_per_person" class="form-label">Price per Person</label>

@@ -13,16 +13,9 @@ class Swimmingpool extends Model
         'name',
         'description',
         'location',
-        'operational_days',
-        'opening_time',
-        'closing_time',
         'price_per_person',
     ];
 
-    protected $casts = [
-        'opening_hours' => 'array',
-    ];
-    
     public function booking()
     {
         return $this->hasMany(Booking::class);

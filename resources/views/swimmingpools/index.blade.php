@@ -151,17 +151,23 @@
                 <div class="pool-card-body">
                     <h5 class="pool-card-title">{{ $swimmingpool->name }}</h5>
                     <p class="pool-card-text">{{ $swimmingpool->description }}</p>
-                    <p class="pool-card-text">
-                        <strong>Operational Days:</strong> {{ implode(', ', json_decode($swimmingpool->operational_days, true)) }}
-                    </p>
-                    <p class="pool-card-text">
-                        <strong>Hours:</strong> {{ $swimmingpool->opening_time }} - {{ $swimmingpool->closing_time }}
-                    </p>                    
-                    <a href="{{ route('swimmingpools.show', $swimmingpool->id) }}" class="pool-card-link">View Details</a>
+                    <div class="d-flex justify-content-between mt-3">
+                        <a href="{{ route('swimmingpools.show', $swimmingpool->id) }}" class="btn btn-info btn-sm">View</a>
+                        <a href="{{ route('swimmingpools.edit', $swimmingpool->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                        <form action="{{ route('swimmingpools.destroy', $swimmingpool->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this pool?');">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
             @endforeach
+
         </div>
+        
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

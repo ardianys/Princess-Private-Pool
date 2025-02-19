@@ -18,9 +18,6 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable;
             $table->string('location')->nullable;
-            $table->json('operational_days')->nullable(); // Menyimpan hari operasional dalam bentuk array JSON
-            $table->time('opening_time')->nullable(); // Waktu buka
-            $table->time('closing_time')->nullable(); // Waktu tutup
             $table->integer('price_per_person')->nullable;
             $table->timestamps();
         });
