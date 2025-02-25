@@ -56,4 +56,6 @@
 
     <br>
     <a href="{{ route('allotments.index') }}">Batal</a>
+    <!-- Tambahkan tombol kembali ke halaman Swimming Pool -->
+    <a href="{{ route('swimmingpools.show', $allotment->swimmingpool_id) }}">Back to Swimming Pool</a>
 @endsection

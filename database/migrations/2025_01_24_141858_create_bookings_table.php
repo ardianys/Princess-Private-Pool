@@ -15,10 +15,13 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('swimmingpool_id');
-            $table->integer('number_of_people');
-            $table->date('booking_date');
-            $table->time('booking_time');
-            $table->decimal('total_cost', 8, 2);
+            $table->foreignId('allotment_id');
+            $table->integer('time_booking');
+            $table->date('total_person');
+            $table->time('total_payments');
+            $table->decimal('model_payments');
+            $table->decimal('status');
+            $table->decimal('expired_time_payments');
             $table->timestamps();
         });
     }

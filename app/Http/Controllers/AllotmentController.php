@@ -93,7 +93,7 @@ class AllotmentController extends Controller
 
         $allotment->update($request->all());
 
-        return redirect()->route('allotments.index')->with('success', 'Allotment successfully updated!');
+        return redirect()->route('swimmingpools.show',$allotment->swimmingpool_id)->with('success', 'Allotment successfully updated!');
     }
 
     /**
