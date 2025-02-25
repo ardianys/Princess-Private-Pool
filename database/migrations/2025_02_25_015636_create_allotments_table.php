@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('allotments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('swimmingpool_id')->constrained()->onDelete('cascade');
+            $table->string('slug')->unique();
+            $table->date('date');
+            $table->time('open');
+            $table->time('closed');
+            $table->integer('session');
+            $table->decimal('price_per_person', 10, 2);
+            $table->integer('total_person');
             $table->timestamps();
         });
     }

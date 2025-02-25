@@ -16,7 +16,47 @@
                 <p><strong>Description:</strong> {{ $swimmingpool->description }}</p>
                 <p><strong>Location:</strong> {{ $swimmingpool->location }}</p>
                 <p><strong>Price per person:</strong> ${{ number_format($swimmingpool->price_per_person, 2) }}</p>
-                <p><strong>Created by:</strong> {{ $swimmingpool->user->name }}</p>
+                <p><strong>Created by:</strong> {{ optional($swimmingpool->user)->name ?? 'Uknown' }}</p>
+
+                <h3>Allotments</h3>
+                @if (!$swimmingpool->allotments || $swimmingpool->allotments->isEmpty())
+                <p class="text-muted">No allotments available for this swimming pool.</p>
+                @else
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Open</th>
+                                <th>Closed</th>
+                                <th>Session</th>
+                                <th>Price per Person</th>
+                                <th>Total Person</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($swimmingpool->allotments as $allotment)
+                                <tr>
+                                    <td>{{ $allotment->date }}</td>
+                                    <td>{{ $allotment->open }}</td>
+                                    <td>{{ $allotment->closed }}</td>
+                                    <td>{{ $allotment->session }}</td>
+                                    <td>${{ number_format($allotment->price_per_person, 2) }}</td>
+                                    <td>{{ $allotment->total_person }}</td>
+                                    <td>
+                                        <a href="{{ route('allotments.show', $allotment) }}" class="btn btn-primary btn-sm">View</a>
+                                        <a href="{{ route('allotments.edit', $allotment) }}" class="btn btn-warning btn-sm">Edit</a>
+                                        <form action="{{ route('allotments.destroy', $allotment) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endif
             </div>
         </div>
     </div>

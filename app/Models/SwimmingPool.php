@@ -18,9 +18,14 @@ class Swimmingpool extends Model
         'price_per_person',
     ];
 
-    public function booking()
+    public function bookings()
     {
         return $this->hasMany(Booking::class);
+    }
+    
+    public function allotments()
+    {
+        return $this->hasMany(Allotment::class, 'swimmingpool_id');
     }
 
     public function user()

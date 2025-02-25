@@ -54,7 +54,7 @@ class SwimmingpoolController extends Controller
     // Menampilkan detail kolam renang berdasarkan ID  
     public function show($id): View  
     {  
-        $swimmingpool = Swimmingpool::findOrFail($id); // Mengambil kolam renang berdasarkan ID  
+        $swimmingpool = Swimmingpool::with('allotments')->findOrFail($id); // Mengambil kolam renang berdasarkan ID  
         return view('swimmingpools.show', compact('swimmingpool'));  
     }  
 

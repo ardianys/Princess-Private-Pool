@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->foreignId('swimming_pool_id');
+            $table->foreignId('swimmingpool_id');
             $table->integer('number_of_people');
             $table->date('booking_date');
             $table->time('booking_time');
