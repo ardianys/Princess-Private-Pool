@@ -6,7 +6,7 @@
 
     <div class="card border-0 shadow-lg rounded mb-4 swimming-pool-card">
         <div class="card-body">
-            <img src="{{ asset('/storage/swimmingpools/'.$swimmingpool->image) }}" alt="Post Image" class="rounded" style="width: 100%">
+            <img src="{{ asset('storage/'.$swimmingpool->image) }}" alt="Swimming Pool Image" class="rounded" style="width: 100%">
         </div>
     </div>
 
@@ -17,6 +17,46 @@
                 <p><strong>Location:</strong> {{ $swimmingpool->location }}</p>
                 <p><strong>Price per person:</strong> ${{ number_format($swimmingpool->price_per_person, 2) }}</p>
                 <p><strong>Created by:</strong> {{ $swimmingpool->user->name }}</p>
+                
+                <div class="col-md-8 mx-auto">
+                    <h2>Schedules</h2>
+                    @foreach($swimmingpool->schedules as $schedule)
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <p><strong>Day:</strong> {{ $schedule->day }}</p>
+                                <p><strong>Time:</strong> {{ $schedule->start_time }} - {{ $schedule->end_time }}</p>
+                                <p><strong>Max People:</strong> {{ $schedule->max_people }}</p>
+                                <p><strong>Current People:</strong> {{ $schedule->current_people }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                <div class="col-md-8 mx-auto">
+                    <h2>Add a Schedule</h2>
+                    <form action="{{ route('schedules.store', $swimmingpool) }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="swimmingpool_id" value="{{ $swimmingpool->id }}" />
+                        <div class="mb-3">
+                            <label for="day" class="form-label">Day</label>
+                            <input type="text" name="day" id="day" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="start_time" class="form-label">Start Time</label>
+                            <input type="time" name="start_time" id="start_time" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="end_time" class="form-label">End Time</label>
+                            <input type="time" name="end_time" id="end_time" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="max_people" class="form-label">Max People</label>
+                            <input type="number" name="max_people" id="max_people" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Schedule</button>
+                    </form>
+                </div>
+
             </div>
         </div>
     </div>

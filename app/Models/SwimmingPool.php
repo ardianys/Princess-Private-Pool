@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Swimmingpoolschedule;
+
 
 class Swimmingpool extends Model
 {
@@ -25,5 +27,11 @@ class Swimmingpool extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function schedules()
+    {
+        return $this->hasMany(Swimmingpoolschedule::class, 'swimmingpool_id');
+    }
+
 
 }
