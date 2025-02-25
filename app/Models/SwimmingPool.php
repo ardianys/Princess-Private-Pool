@@ -28,10 +28,4 @@ class Swimmingpool extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function schedules()
-    {
-        return $this->hasMany(Swimmingpoolschedule::class, 'swimmingpool_id');
-    }
-
-
 }
