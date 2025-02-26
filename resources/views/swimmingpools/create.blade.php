@@ -158,13 +158,13 @@
                                 @enderror
                             </div>                 
 
-                            <div class="mb-4">
+                            {{-- <div class="mb-4">
                                 <label for="price_per_person" class="form-label">Price per Person</label>
                                 <input type="number" class="form-control" name="price_per_person" id="price_per_person" step="0.01" min="0">
                                 @error('price_per_person')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                 @enderror
-                            </div>
+                            </div> --}}
 
                             <button type="submit" class="btn btn-primary">Create</button>
                         </form>

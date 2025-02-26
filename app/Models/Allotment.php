@@ -21,19 +21,25 @@ class Allotment extends Model
         'total_person',
     ];
 
-      // Slug otomatis
-      protected static function boot()
-      {
-          parent::boot();
-  
-          static::creating(function ($allotment) {
-              $allotment->slug = Str::slug($allotment->swimmingpool_id . '-' . $allotment->date . '-' . time());
-          });
-      }
+    protected static function boot()
+    {
+        parent::boot();
+    
+        static::creating(function ($allotment) {
+            if (empty($allotment->slug)) {
+                $allotment->slug = Str::slug($allotment->swimmingpool_id . '-' . $allotment->date . '-' . Str::uuid());
+            }
+        });
+    }
   
       // Relasi ke Swimming Pool
       public function swimmingpool()
       {
           return $this->belongsTo(Swimmingpool::class, 'swimmingpool_id');
       }
+
+      public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
 }

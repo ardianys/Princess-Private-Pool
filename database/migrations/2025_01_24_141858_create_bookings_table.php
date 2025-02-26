@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('swimmingpool_id');
-            $table->foreignId('allotment_id');
-            $table->integer('time_booking');
-            $table->date('total_person');
-            $table->time('total_payments');
-            $table->decimal('model_payments');
-            $table->decimal('status');
-            $table->decimal('expired_time_payments');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('swimmingpool_id')->constrained()->onDelete('cascade');
+            $table->foreignId('allotment_id')->constrained()->onDelete('cascade');
+            $table->string('slug')->unique();
+            $table->integer('total_person');
+            $table->decimal('total_payments', 10, 2);
+            $table->string('payment_method'); // e.g., "Transfer Bank", "E-Wallet"
+            $table->enum('status', ['pending', 'paid'])->default('pending');
+            $table->timestamp('expired_time_payments')->nullable();
             $table->timestamps();
         });
     }

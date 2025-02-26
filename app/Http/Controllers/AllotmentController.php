@@ -46,7 +46,7 @@ class AllotmentController extends Controller
 
         Allotment::create([
             'swimmingpool_id'   => $request->swimmingpool_id,
-            'slug'              => Str::slug($request->swimmingpool_id . '-' . $request->date . '-' . time()),
+            // 'slug'              => Str::slug($request->swimmingpool_id . '-' . $request->date . '-' . time()),
             'date'              => $request->date,
             'open'              => $request->open,
             'closed'            => $request->closed,

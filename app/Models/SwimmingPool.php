@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Swimmingpoolschedule;
+use App\Models\Allotment;
+use App\Models\Booking;
 
 
 class Swimmingpool extends Model
@@ -15,7 +16,7 @@ class Swimmingpool extends Model
         'name',
         'description',
         'location',
-        'price_per_person',
+        // 'price_per_person',
     ];
 
     public function bookings()

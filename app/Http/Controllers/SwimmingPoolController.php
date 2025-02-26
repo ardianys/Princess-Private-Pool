@@ -45,7 +45,7 @@ class SwimmingpoolController extends Controller
             'name'              => $request->name,  
             'description'       => $request->description,  
             'location'          => $request->location,
-            'price_per_person'  => $request->price_per_person,  
+            // 'price_per_person'  => $request->price_per_person,  
         ]);  
 
         return redirect()->route('swimmingpools.index')->with('success', 'Swimming pool created successfully!');  

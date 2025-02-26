@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable;
             $table->string('location')->nullable;
-            $table->integer('price_per_person')->nullable;
+            // $table->integer('price_per_person')->nullable;
             $table->timestamps();
         });
     }
