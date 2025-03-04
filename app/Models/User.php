@@ -21,7 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        // 'role',
+        'role',
     ];
 
     /**
@@ -42,8 +42,10 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
+            'name',
+            'email',
             'password' => 'hashed',
+            'role',
         ];
     }
     
@@ -55,6 +57,16 @@ class User extends Authenticatable
     public function swimmingpools()
     {
         return $this->hasMany(Swimmingpool::class);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isCustomer(): bool
+    {
+        return $this->role === 'customer';
     }
 
 }

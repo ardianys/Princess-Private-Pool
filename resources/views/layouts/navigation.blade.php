@@ -15,6 +15,18 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    @if(auth()->check() && auth()->user()->role == 'admin')
+                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                            {{ __('Dashboard Admin') }}
+                        </x-nav-link>
+                    @endif
+
+                    @if(auth()->check() && auth()->user()->role == 'customer')
+                        <x-nav-link :href="route('customer.dashboard')" :active="request()->routeIs('customer.dashboard')">
+                            {{ __('Dashboard Customer') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -70,6 +82,18 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            @if(auth()->check() && auth()->user()->role == 'admin')
+                <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                    {{ __('Dashboard Admin') }}
+                </x-responsive-nav-link>
+            @endif
+
+            @if(auth()->check() && auth()->user()->role == 'customer')
+                <x-responsive-nav-link :href="route('customer.dashboard')" :active="request()->routeIs('customer.dashboard')">
+                    {{ __('Dashboard Customer') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
