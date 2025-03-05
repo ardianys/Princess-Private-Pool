@@ -68,4 +68,11 @@ class BookingController extends Controller
         $booking->delete();
         return redirect()->route('bookings.index')->with('success', 'Booking dihapus.');
     }
+
+    public function indexCustomer()
+{
+    $bookings = Booking::where('user_id', auth()->id())->get();
+    return view('customer.bookings', compact('bookings'));
+}
+
 }

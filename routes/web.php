@@ -8,6 +8,8 @@ use App\Http\Controllers\AllotmentController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Middleware\RoleMiddleware;
+use App\Http\Middleware\CheckExpiredPayments;
 
 // Route untuk halaman utama
 Route::get('/', function () {
@@ -21,7 +23,10 @@ Route::get('/home', function () {
 // Middleware untuk semua pengguna yang sudah login
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () { 
-        return view('dashboard');
+        if (auth()->user()->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
+        return redirect()->route('customer.dashboard');
     })->name('dashboard');
 
     // // CRUD Booking (hanya user yang login bisa booking)
@@ -40,25 +45,29 @@ Route::middleware('auth')->group(function () {
 });
 
 // 🔹 Route untuk Admin
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-
-    // Admin bisa mengelola swimming pool & allotments
+Route::middleware(['auth', RoleMiddleware::class.':admin'])->prefix('admin')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::resource('swimmingpools', SwimmingpoolController::class);
     Route::resource('allotments', AllotmentController::class);
+    Route::resource('bookings', BookingController::class);
+    Route::resource('payments', PaymentController::class);
 });
 
 // 🔹 Route untuk Customer
-Route::middleware(['auth', 'role:customer'])->group(function () {
-    Route::get('/customer/dashboard', [CustomerController::class, 'index'])->name('customer.dashboard');
-
-    // Customer hanya bisa melakukan booking
+Route::middleware(['auth', RoleMiddleware::class.':customer'])->prefix('customer')->group(function () {
+    Route::get('/dashboard', [CustomerController::class, 'dashboard'])->name('customer.dashboard');
     Route::resource('bookings', BookingController::class);
-
-    // Route pembayaran customer
-    Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
-    Route::post('/payment/process', [PaymentController::class, 'process'])->name('payment.process');
+    Route::resource('payments', PaymentController::class);
+    Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.customer');
+    Route::get('/payments', [PaymentController::class, 'index'])->name('payments.customer');
 });
+
+
+// // 🔹 Route untuk public
+// Route::middleware(['auth', 'role:admin'])->group(function () {
+//     Route::get('/public/dashboard', [PublicController::class, 'index'])->name('public.dashboard');
+//     Route::resource('swimmingpools', SwimmingpoolController::class);
+// });
 
 // Include file route authentication (Login, Register, Logout)
 require __DIR__.'/auth.php';

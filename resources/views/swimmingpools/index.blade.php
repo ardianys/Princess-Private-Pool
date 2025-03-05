@@ -145,6 +145,9 @@
         </div>
 
         <div class="pool-card-container">
+            @if($swimmingpools->isEmpty())
+                <p>No swimming pools available.</p>
+            @else
             @foreach($swimmingpools as $swimmingpool)
             <div class="pool-card">
                 <img src="{{ asset('storage/swimmingpools/'.$swimmingpool->image) }}" class="rounded">
@@ -165,7 +168,7 @@
                 </div>
             </div>
             @endforeach
-
+            @endif
         </div>
         
     </div>
