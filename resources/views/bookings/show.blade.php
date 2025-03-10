@@ -1,6 +1,3 @@
-@extends('layouts.app')
-
-@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +7,7 @@
     <title>Booking Details</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        /* ... (styles from create swimming pool) ... */
         html, body {
             height: 100%;
             margin: 0;
@@ -124,4 +122,3 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-@endsection
