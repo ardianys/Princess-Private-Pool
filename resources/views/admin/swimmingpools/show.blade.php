@@ -63,7 +63,7 @@
     </div>
 
     <div class="text-center mt-4">
-        <a href="{{ route('swimmingpools.index') }}" class="btn btn-secondary">Back to List</a>
+        <a href="{{ route('admin.swimmingpools.index') }}" class="btn btn-secondary">Back to List</a>
     </div>
 </div>
 @endsection

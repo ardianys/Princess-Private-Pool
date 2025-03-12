@@ -2,16 +2,23 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\User\CustomerController;
+use App\Http\Controllers\Admin\SwimmingpoolController as AdminSwimmingpoolController;
+use App\Http\Controllers\User\SwimmingpoolController as UserSwimmingpoolController;
 use App\Http\Controllers\SwimmingpoolController;
+use App\Http\Controllers\Admin\AllotmentController as AdminAllotmentController;
 use App\Http\Controllers\AllotmentController;
+use App\Http\Controllers\Admin\BookingController as AdminBookingController;
+use App\Http\Controllers\User\BookingController as UserBookingController;
 use App\Http\Controllers\BookingController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\Admin\PaymentController as AdminPaymentController;
+use App\Http\Controllers\User\PaymentController as UserPaymentController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Middleware\RoleMiddleware;
 use App\Http\Middleware\CheckExpiredPayments;
 
-// Route untuk halaman utama
+// 🔹 Route untuk halaman utama
 Route::get('/', function () {
     return view('welcome');
 });
@@ -20,23 +27,13 @@ Route::get('/home', function () {
     return view('home');
 });
 
-// Middleware untuk semua pengguna yang sudah login
+// 🔹 Middleware untuk semua pengguna yang sudah login
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function () { 
-        if (auth()->user()->role === 'admin') {
-            return redirect()->route('admin.dashboard');
-        }
-        return redirect()->route('customer.dashboard');
+    Route::get('/dashboard', function () {
+        return auth()->user()->role === 'admin'
+            ? redirect()->route('admin.dashboard')
+            : redirect()->route('customer.dashboard');
     })->name('dashboard');
-
-    // // CRUD Booking (hanya user yang login bisa booking)
-    // Route::resource('bookings', BookingController::class);
-
-    // // CRUD Allotment (hanya user yang login bisa melihat allotment)
-    // Route::resource('allotments', AllotmentController::class);
-
-    // // CRUD Swimming Pool (hanya user yang login bisa melihat swimming pool)
-    // Route::resource('swimmingpools', SwimmingpoolController::class);
 
     // Profil user
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -44,30 +41,27 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::resource('swimmingpools', SwimmingpoolController::class);
+Route::resource('allotments', AllotmentController::class);
+Route::resource('bookings', BookingController::class)->middleware(CheckExpiredPayments::class);
+Route::resource('payments', PaymentController::class);
+
 // 🔹 Route untuk Admin
-Route::middleware(['auth', RoleMiddleware::class.':admin'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-    Route::resource('swimmingpools', SwimmingpoolController::class);
-    Route::resource('allotments', AllotmentController::class);
-    Route::resource('bookings', BookingController::class);
-    Route::resource('payments', PaymentController::class);
+Route::middleware(['auth', RoleMiddleware::class.':admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::resource('swimmingpools', AdminSwimmingpoolController::class);
+    Route::resource('allotments', AdminAllotmentController::class);
+    Route::resource('bookings', AdminBookingController::class)->middleware(CheckExpiredPayments::class);
+    Route::resource('payments', AdminPaymentController::class);
 });
 
 // 🔹 Route untuk Customer
-Route::middleware(['auth', RoleMiddleware::class.':customer'])->prefix('customer')->group(function () {
-    Route::get('/dashboard', [CustomerController::class, 'dashboard'])->name('customer.dashboard');
-    Route::resource('bookings', BookingController::class);
-    Route::resource('payments', PaymentController::class);
-    Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.customer');
-    Route::get('/payments', [PaymentController::class, 'index'])->name('payments.customer');
+Route::middleware(['auth', RoleMiddleware::class.':customer'])->prefix('customer')->name('customer.')->group(function () {
+    Route::get('/dashboard', [CustomerController::class, 'dashboard'])->name('dashboard'); 
+    Route::resource('swimmingpools', UserSwimmingpoolController::class);
+    Route::resource('bookings', UserBookingController::class)->middleware(CheckExpiredPayments::class);
+    Route::resource('payments', UserPaymentController::class);
 });
 
-
-// // 🔹 Route untuk public
-// Route::middleware(['auth', 'role:admin'])->group(function () {
-//     Route::get('/public/dashboard', [PublicController::class, 'index'])->name('public.dashboard');
-//     Route::resource('swimmingpools', SwimmingpoolController::class);
-// });
-
-// Include file route authentication (Login, Register, Logout)
+// 🔹 Include file route authentication (Login, Register, Logout)
 require __DIR__.'/auth.php';

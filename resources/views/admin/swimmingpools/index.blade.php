@@ -112,7 +112,7 @@
                                         </button>
                                     </form>
                                 @elseif(Auth::check() && auth()->user()->role === 'customer')
-                                    <a href="{{ route('customer.swimmingpools.show', $swimmingpool->id) }}" class="btn btn-info btn-sm">View</a>
+                                    <a href="{{ route('admin.swimmingpools.show', $swimmingpool->id) }}" class="btn btn-info btn-sm">View</a>
                                 @endif
                             </div>
                         </div>

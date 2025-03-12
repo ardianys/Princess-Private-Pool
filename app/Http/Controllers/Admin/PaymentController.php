@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Booking;
 use App\Models\Payment;
+use App\Http\Controllers\Controller; 
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
