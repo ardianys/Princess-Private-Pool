@@ -19,7 +19,7 @@ class Booking extends Model
         'total_payments',
         'payment_method',
         'status',
-        'expired_time_payments'
+        // 'expired_time_payments'
     ];
 
     protected static function boot()

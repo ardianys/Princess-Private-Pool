@@ -14,7 +14,8 @@ class Payment extends Model
     protected $fillable = [
         'user_id', 'booking_id', 'slug', 'transaction_id', 
         'total_amount', 'admin_fee', 'payment_method', 
-        'status', 'expired_time'
+        'status',
+        // 'expired_time'
     ];
 
     protected static function boot()
@@ -24,7 +25,7 @@ class Payment extends Model
         static::creating(function ($payment) {
             $payment->slug = 'payment-' . Str::random(10);
             $payment->transaction_id = Str::uuid();
-            $payment->expired_time = Carbon::now()->addHours(3);
+            // $payment->expired_time = Carbon::now()->addHours(3);
         });
     }
 

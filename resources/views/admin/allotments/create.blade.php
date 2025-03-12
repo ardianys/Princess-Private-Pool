@@ -106,7 +106,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h1>Add Allotment</h1>
-                        <form action="{{ route('allotments.store') }}" method="POST">
+                        <form action="{{ route('admin.allotments.store') }}" method="POST">
                             @csrf
                             <div class="mb-4">
                                 <label for="swimmingpool_id" class="form-label">Swimming Pool:</label>
@@ -165,7 +165,7 @@
                             <button type="submit" class="btn btn-primary">Save</button>
                         </form>
                         <br>
-                        <a href="{{ route('allotments.index') }}" class="btn btn-secondary mt-3">Cancel</a>
+                        <a href="{{ route('admin.allotments.index') }}" class="btn btn-secondary mt-3">Cancel</a>
                     </div>
                 </div>
             </div>

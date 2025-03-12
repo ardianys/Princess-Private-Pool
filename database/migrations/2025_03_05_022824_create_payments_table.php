@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal('admin_fee', 10, 2)->default(2000);
             $table->string('payment_method');
             $table->enum('status', ['pending', 'paid', 'canceled'])->default('pending');
-            $table->timestamp('expired_time')->nullable(); // Waktu kedaluwarsa pembayaran
+            // $table->timestamp('expired_time')->nullable(); // Waktu kedaluwarsa pembayaran
             $table->timestamps();
         });
     }

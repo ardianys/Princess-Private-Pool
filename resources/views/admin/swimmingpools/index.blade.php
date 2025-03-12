@@ -90,7 +90,7 @@
 
         {{-- Menampilkan daftar swimming pools --}}
         <div class="pool-card-container">
-            @if(isset($swimmingpools) && count($swimmingpools) > 0)
+            @if(isset($swimmingpools) && count($swimmingpools) < 0)
                 <p>No swimming pools available.</p>
             @else
                 @foreach($swimmingpools as $swimmingpool)

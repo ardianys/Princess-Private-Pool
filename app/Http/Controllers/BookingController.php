@@ -40,7 +40,7 @@ class BookingController extends Controller
             'total_payments'        => $total_payments,
             'payment_method'        => $request->payment_method,
             'status'                => 'pending',
-            'expired_time_payments' => now()->addHours(3),
+            // 'expired_time_payments' => now()->addHours(3),
         ]);
 
         return redirect()->route('bookings.index')->with('success', 'Booking berhasil dibuat!');

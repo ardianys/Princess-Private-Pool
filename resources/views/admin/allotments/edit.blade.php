@@ -115,7 +115,7 @@
                                 </ul>
                             </div>
                         @endif
-                        <form action="{{ route('allotments.update', $allotment) }}" method="POST">
+                        <form action="{{ route('admin.allotments.update', $allotment) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <div class="mb-4">
@@ -155,8 +155,8 @@
                             <button type="submit" class="btn btn-primary">Update</button>
                         </form>
                         <br>
-                        <a href="{{ route('allotments.index') }}" class="btn btn-secondary mt-3">Cancel</a>
-                        <a href="{{ route('swimmingpools.show', $allotment->swimmingpool_id) }}" class="btn btn-secondary mt-3">Back to Swimming Pool</a>
+                        <a href="{{ route('admin.allotments.index') }}" class="btn btn-secondary mt-3">Cancel</a>
+                        <a href="{{ route('admin.swimmingpools.show', $allotment->swimmingpool_id) }}" class="btn btn-secondary mt-3">Back to Swimming Pool</a>
                     </div>
                 </div>
             </div>

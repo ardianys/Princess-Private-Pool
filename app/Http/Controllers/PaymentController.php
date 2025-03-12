@@ -41,7 +41,7 @@ class PaymentController extends Controller
             'admin_fee'      => 2000,
             'payment_method' => $request->payment_method,
             'status'         => 'pending',
-            'expired_time'   => Carbon::now()->addHours(3),
+            // 'expired_time'   => Carbon::now()->addHours(3),
         ]);
 
         return redirect()->route('payments.index')->with('success', 'Pembayaran berhasil dibuat!');

@@ -14,13 +14,13 @@ class PaymentController extends Controller
     public function index()
     {
         $payments = Payment::with('booking')->get();
-        return view('payments.index', compact('payments'));
+        return view('admin.payments.index', compact('payments'));
     }
 
     public function create()
     {
         $bookings = Booking::all(); // Ambil semua booking yang tersedia
-        return view('payments.create', compact('bookings'));
+        return view('admin.payments.create', compact('bookings'));
     }
 
     public function store(Request $request)
@@ -42,7 +42,7 @@ class PaymentController extends Controller
             'admin_fee'      => 2000,
             'payment_method' => $request->payment_method,
             'status'         => 'pending',
-            'expired_time'   => Carbon::now()->addHours(3),
+            // 'expired_time'   => Carbon::now()->addHours(3),
         ]);
 
         return redirect()->route('payments.index')->with('success', 'Pembayaran berhasil dibuat!');
@@ -50,12 +50,12 @@ class PaymentController extends Controller
 
     public function show(Payment $payment)
     {
-        return view('payments.show', compact('payment'));
+        return view('admin.payments.show', compact('payment'));
     }
 
     public function edit(Payment $payment)
     {
-        return view('payments.edit', compact('payment'));
+        return view('admin.payments.edit', compact('payment'));
     }
 
     public function update(Request $request, Payment $payment)
@@ -66,12 +66,12 @@ class PaymentController extends Controller
 
         $payment->update(['status' => $request->status]);
 
-        return redirect()->route('payments.index')->with('success', 'Status pembayaran diperbarui!');
+        return redirect()->route('admin.payments.index')->with('success', 'Status pembayaran diperbarui!');
     }
 
     public function destroy(Payment $payment)
     {
         $payment->delete();
-        return redirect()->route('payments.index')->with('success', 'Pembayaran dihapus.');
+        return redirect()->route('admin.payments.index')->with('success', 'Pembayaran dihapus.');
     }
 }

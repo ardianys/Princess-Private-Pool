@@ -113,7 +113,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h1>List Allotments</h1>
-                        <a href="{{ route('allotments.create') }}" class="btn btn-primary mt-3">Add Allotment</a>
+                        <a href="{{ route('admin.allotments.create') }}" class="btn btn-primary mt-3">Add Allotment</a>
                         <table class="table mt-3">
                             <thead>
                                 <tr>
@@ -136,8 +136,8 @@
                                         <td>{{ $allotment->price_per_person }}</td>
                                         <td>{{ $allotment->total_person }}</td>
                                         <td class="text-center">
-                                            <a href="{{ route('allotments.edit', $allotment) }}" class="btn btn-secondary">Edit</a>
-                                            <form action="{{ route('allotments.destroy', $allotment) }}" method="POST" style="display:inline;">
+                                            <a href="{{ route('admin.allotments.edit', $allotment) }}" class="btn btn-secondary">Edit</a>
+                                            <form action="{{ route('admin.allotments.destroy', $allotment) }}" method="POST" style="display:inline;">
                                                 @csrf @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">Delete</button>
                                             </form>

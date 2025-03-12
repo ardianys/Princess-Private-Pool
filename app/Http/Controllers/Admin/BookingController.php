@@ -14,11 +14,11 @@ class BookingController extends Controller
 {
     public function index() {
         $bookings = Booking::with('user', 'swimmingpool', 'allotment')->get();
-        return view('bookings.index', compact('bookings'));
+        return view('admin.bookings.index', compact('bookings'));
     }
 
     public function create() {
-        return view('bookings.create');
+        return view('admin.bookings.create');
     }
 
     public function store(Request $request) {
@@ -41,18 +41,18 @@ class BookingController extends Controller
             'total_payments'        => $total_payments,
             'payment_method'        => $request->payment_method,
             'status'                => 'pending',
-            'expired_time_payments' => now()->addHours(3),
+            // 'expired_time_payments' => now()->addHours(3),
         ]);
 
-        return redirect()->route('bookings.index')->with('success', 'Booking berhasil dibuat!');
+        return redirect()->route('admin.bookings.index')->with('success', 'Booking berhasil dibuat!');
     }
 
     public function show(Booking $booking) {
-        return view('bookings.show', compact('booking'));
+        return view('admin.bookings.show', compact('booking'));
     }
 
     public function edit(Booking $booking) {
-        return view('bookings.edit', compact('booking'));
+        return view('admin.bookings.edit', compact('booking'));
     }
 
     public function update(Request $request, Booking $booking) {
@@ -62,12 +62,12 @@ class BookingController extends Controller
 
         $booking->update(['status' => $request->status]);
 
-        return redirect()->route('bookings.index')->with('success', 'Status booking diperbarui!');
+        return redirect()->route('admin.bookings.index')->with('success', 'Status booking diperbarui!');
     }
 
     public function destroy(Booking $booking) {
         $booking->delete();
-        return redirect()->route('bookings.index')->with('success', 'Booking dihapus.');
+        return redirect()->route('admin.bookings.index')->with('success', 'Booking dihapus.');
     }
 
     public function indexCustomer()

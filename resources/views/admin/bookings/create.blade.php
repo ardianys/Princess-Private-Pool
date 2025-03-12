@@ -115,7 +115,7 @@
                                 </ul>
                             </div>
                         @endif
-                        <form action="{{ route('bookings.store') }}" method="POST">
+                        <form action="{{ route('admin.bookings.store') }}" method="POST">
                             @csrf
                             <div class="mb-4">
                                 <label for="swimmingpool_id" class="form-label">Swimming Pool:</label>
@@ -147,7 +147,7 @@
                             <button type="submit" class="btn btn-primary">Book Now</button>
                         </form>
                         <br>
-                        <a href="{{ route('bookings.index') }}" class="btn btn-secondary mt-3">Back</a>
+                        <a href="{{ route('admin.bookings.index') }}" class="btn btn-secondary mt-3">Back</a>
                     </div>
                 </div>
             </div>

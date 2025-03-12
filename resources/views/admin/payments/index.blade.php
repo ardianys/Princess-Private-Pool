@@ -17,10 +17,10 @@
                         <p class="pool-card-text">Booking ID: {{ $payment->booking_id }}</p>
                         <p class="pool-card-text">Total: Rp {{ number_format($payment->total_amount) }}</p>
                         <p class="pool-card-text">Status: {{ $payment->status }}</p>
-                        <p class="pool-card-text">Expired: {{ \Carbon\Carbon::parse($payment->expired_time)->format('d M Y H:i') }}</p>
+                        {{-- <p class="pool-card-text">Expired: {{ \Carbon\Carbon::parse($payment->expired_time)->format('d M Y H:i') }}</p> --}}
                         <div class="d-flex justify-content-between mt-3">
-                            <a href="{{ route('payments.show', $payment->id) }}" class="btn btn-info btn-sm">Lihat</a>
-                            <a href="{{ route('payments.edit', $payment->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                            <a href="{{ route('admin.payments.show', $payment->id) }}" class="btn btn-info btn-sm">Lihat</a>
+                            <a href="{{ route('admin.payments.edit', $payment->id) }}" class="btn btn-primary btn-sm">Edit</a>
                         </div>
                     </div>
                 </div>

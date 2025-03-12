@@ -17,7 +17,7 @@ class AllotmentController extends Controller
     {
         $allotments = Allotment::with('swimmingpool')->latest()->get();
 
-        return view('allotments.index', compact('allotments'));
+        return view('admin.allotments.index', compact('allotments'));
     }
 
     /**
@@ -27,7 +27,7 @@ class AllotmentController extends Controller
     {
         $swimmingpools = Swimmingpool::all();
 
-        return view('allotments.create', compact('swimmingpools'));
+        return view('admin.allotments.create', compact('swimmingpools'));
     }
 
     /**
@@ -64,7 +64,7 @@ class AllotmentController extends Controller
      */
     public function show(Allotment $allotment)
     {
-        return view('allotments.show', compact('allotment'));
+        return view('admin.allotments.show', compact('allotment'));
     }
 
     /**
@@ -74,7 +74,7 @@ class AllotmentController extends Controller
     {
         $swimmingpools = Swimmingpool::all();
 
-        return view('allotments.edit', compact('allotment', 'swimmingpools'));
+        return view('admin.allotments.edit', compact('allotment', 'swimmingpools'));
     }
 
     /**

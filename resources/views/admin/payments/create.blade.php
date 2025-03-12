@@ -4,7 +4,7 @@
 <div class="container">
     <h1>Buat Pembayaran Baru</h1>
 
-    <form action="{{ route('payments.store') }}" method="POST">
+    <form action="{{ route('admin.payments.store') }}" method="POST">
         @csrf
 
         <div class="mb-3">
@@ -23,7 +23,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Buat Pembayaran</button>
-        <a href="{{ route('payments.index') }}" class="btn btn-secondary">Batal</a>
+        <a href="{{ route('admin.payments.index') }}" class="btn btn-secondary">Batal</a>
     </form>
 </div>
 @endsection

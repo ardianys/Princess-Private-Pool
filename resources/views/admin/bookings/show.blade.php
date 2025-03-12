@@ -112,8 +112,8 @@
                         <p><strong>Total Payment:</strong> Rp {{ number_format($booking->total_payments, 0, ',', '.') }}</p>
                         <p><strong>Payment Method:</strong> {{ $booking->payment_method }}</p>
                         <p><strong>Status:</strong> {{ ucfirst($booking->status) }}</p>
-                        <p><strong>Expired Time:</strong> {{ $booking->expired_time_payments }}</p>
-                        <a href="{{ route('bookings.index') }}" class="btn btn-primary">Back</a>
+                        {{-- <p><strong>Expired Time:</strong> {{ $booking->expired_time_payments }}</p> --}}
+                        <a href="{{ route('admin.bookings.index') }}" class="btn btn-primary">Back</a>
                     </div>
                 </div>
             </div>

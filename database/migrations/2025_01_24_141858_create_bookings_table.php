@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal('total_payments', 10, 2);
             $table->string('payment_method'); // e.g., "Transfer Bank", "E-Wallet"
             $table->enum('status', ['pending', 'paid'])->default('pending');
-            $table->timestamp('expired_time_payments')->nullable();
+            // $table->timestamp('expired_time_payments')->nullable();
             $table->timestamps();
         });
     }
