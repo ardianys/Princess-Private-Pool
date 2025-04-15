@@ -17,7 +17,7 @@ class SwimmingpoolController extends Controller
     public function index(): View  
     {  
         $swimmingpools = Swimmingpool::all(); // Mengambil semua data kolam renang  
-        return view('swimmingpools.index', compact('swimmingpools'));  
+        return view('customer.swimmingpools.index', compact('swimmingpools'));  
     }  
 
     // // Menampilkan form untuk membuat kolam renang  
@@ -56,7 +56,7 @@ class SwimmingpoolController extends Controller
     public function show($id): View  
     {  
         $swimmingpool = Swimmingpool::with('allotments')->findOrFail($id); // Mengambil kolam renang berdasarkan ID  
-        return view('swimmingpools.show', compact('swimmingpool'));  
+        return view('customer.swimmingpools.show', compact('swimmingpool'));  
     }  
 
     // // Menampilkan form untuk mengedit kolam renang  
