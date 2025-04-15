@@ -12,17 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('payments', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('booking_id')->constrained()->onDelete('cascade');
-            $table->string('slug')->unique();
-            $table->string('transaction_id')->unique();
-            $table->decimal('total_amount', 10, 2);
-            $table->decimal('admin_fee', 10, 2)->default(2000);
-            $table->string('payment_method');
-            $table->enum('status', ['pending', 'paid', 'canceled'])->default('pending');
-            // $table->timestamp('expired_time')->nullable(); // Waktu kedaluwarsa pembayaran
-            $table->timestamps();
+        $table->id();
+        $table->foreignId('booking_id')->constrained()->onDelete('cascade');
+        $table->string('slug')->unique();
+        $table->integer('total_payment'); // total booking + biaya admin
+        $table->enum('status', ['pending', 'paid', 'canceled'])->default('pending');
+        $table->string('payment_method')->nullable(); // misal: transfer bank
+        $table->timestamp('expired_time')->nullable(); // expired 3 jam
+        $table->timestamps();
         });
     }
 

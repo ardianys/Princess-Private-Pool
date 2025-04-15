@@ -2,15 +2,15 @@
 
 @section('content')
 <div class="container">
-    <h1>Detail Pembayaran</h1>
+    <h1>Detail of Payments</h1>
     
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Pembayaran #{{ $payment->id }}</h5>
             <p><strong>Booking ID:</strong> {{ $payment->booking_id }}</p>
-            <p><strong>Total Bayar:</strong> Rp {{ number_format($payment->total_amount) }}</p>
+            <p><strong>Total Payments:</strong> Rp {{ number_format($payment->total_amount) }}</p>
             <p><strong>Status:</strong> {{ ucfirst($payment->status) }}</p>
-            <p><strong>Metode Pembayaran:</strong> {{ $payment->payment_method }}</p>
+            <p><strong>Payments Method:</strong> {{ $payment->payment_method }}</p>
             {{-- <p><strong>Expired:</strong> {{ \Carbon\Carbon::parse($payment->expired_time)->format('d M Y H:i') }}</p> --}}
 
             <a href="{{ route('admin.payments.index') }}" class="btn btn-secondary">Kembali</a>

@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Booking;
+use App\Http\Controllers\Controller;
 use App\Models\Payment;
-use App\Http\Controllers\Controller; 
-use Illuminate\Support\Str;
-use Carbon\Carbon;
+use App\Models\Booking;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PaymentController extends Controller
 {
@@ -19,33 +18,30 @@ class PaymentController extends Controller
 
     public function create()
     {
-        $bookings = Booking::all(); // Ambil semua booking yang tersedia
+        $bookings = Booking::where('status', 'pending')->get();
         return view('admin.payments.create', compact('bookings'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'booking_id'     => 'required|exists:bookings,id',
+            'booking_id' => 'required|exists:bookings,id',
             'payment_method' => 'required|string',
         ]);
 
         $booking = Booking::findOrFail($request->booking_id);
-        $total_amount = $booking->total_payments + 2000;
+        $total = $booking->total_payments; // + biaya admin
 
-        $payment = Payment::create([
-            'user_id'        => auth()->id(),
-            'booking_id'     => $booking->id,
-            'slug'           => 'payment-' . Str::random(10),
-            'transaction_id' => Str::uuid(),
-            'total_amount'   => $total_amount,
-            'admin_fee'      => 2000,
+        Payment::create([
+            'booking_id' => $booking->id,
+            'slug' => Str::uuid(),
+            'total_payment' => $total,
             'payment_method' => $request->payment_method,
-            'status'         => 'pending',
-            // 'expired_time'   => Carbon::now()->addHours(3),
+            'status' => 'pending',
+            'expired_time' => now()->addHours(3),
         ]);
 
-        return redirect()->route('payments.index')->with('success', 'Pembayaran berhasil dibuat!');
+        return redirect()->route('admin.payments.index')->with('success', 'Pembayaran berhasil dibuat!');
     }
 
     public function show(Payment $payment)
@@ -72,6 +68,6 @@ class PaymentController extends Controller
     public function destroy(Payment $payment)
     {
         $payment->delete();
-        return redirect()->route('admin.payments.index')->with('success', 'Pembayaran dihapus.');
+        return redirect()->route('admin.payments.index')->with('success', 'Data pembayaran dihapus.');
     }
 }
