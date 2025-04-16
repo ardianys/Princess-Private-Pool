@@ -134,7 +134,7 @@
                                     <th>Total Payment</th>
                                     <th>Payment Method</th>
                                     <th>Status</th>
-                                    <th>Expired Time</th>
+                                    {{-- <th>Expired Time</th> --}}
                                     <th>Actions</th>
                                 </tr>
                             </thead>

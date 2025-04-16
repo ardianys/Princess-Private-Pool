@@ -12,7 +12,7 @@ class PaymentController extends Controller
 {
     public function index()
     {
-        $payments = Payment::with('booking')->get();
+        $payments = Payment::with('booking')->paginate(10);
         return view('admin.payments.index', compact('payments'));
     }
 

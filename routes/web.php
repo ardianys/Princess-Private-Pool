@@ -42,7 +42,8 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('swimmingpools', SwimmingpoolController::class);
 Route::resource('allotments', AllotmentController::class);
-Route::resource('bookings', BookingController::class)->middleware(CheckExpiredPayments::class);
+// Route::resource('bookings', BookingController::class)->middleware(CheckExpiredPayments::class);
+Route::resource('bookings', BookingController::class);
 Route::resource('payments', PaymentController::class);
 
 // 🔹 Route untuk Admin
@@ -50,7 +51,8 @@ Route::middleware(['auth', RoleMiddleware::class.':admin'])->prefix('admin')->na
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::resource('swimmingpools', AdminSwimmingpoolController::class);
     Route::resource('allotments', AdminAllotmentController::class);
-    Route::resource('bookings', AdminBookingController::class)->middleware(CheckExpiredPayments::class);
+    // Route::resource('bookings', AdminBookingController::class)->middleware(CheckExpiredPayments::class);
+    Route::resource('bookings', AdminBookingController::class);
     Route::resource('payments', AdminPaymentController::class);
 });
 
@@ -58,7 +60,8 @@ Route::middleware(['auth', RoleMiddleware::class.':admin'])->prefix('admin')->na
 Route::middleware(['auth', RoleMiddleware::class.':customer'])->prefix('customer')->name('customer.')->group(function () {
     Route::get('/dashboard', [CustomerController::class, 'dashboard'])->name('dashboard'); 
     Route::resource('swimmingpools', UserSwimmingpoolController::class);
-    Route::resource('bookings', UserBookingController::class)->middleware(CheckExpiredPayments::class);
+    // Route::resource('bookings', UserBookingController::class)->middleware(CheckExpiredPayments::class);
+    Route::resource('bookings', UserBookingController::class);
     Route::resource('payments', UserPaymentController::class);
 });
 
