@@ -17,7 +17,7 @@ use App\Http\Controllers\User\PaymentController as UserPaymentController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Middleware\RoleMiddleware;
 
-// 🔹 Route untuk halaman utama
+// 🔹 Halaman utama
 Route::get('/', function () {
     return view('welcome');
 });
@@ -26,7 +26,7 @@ Route::get('/home', function () {
     return view('home');
 });
 
-// 🔹 Middleware untuk semua pengguna yang sudah login
+// 🔹 Middleware untuk user yang sudah login
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return auth()->user()->role === 'admin'
@@ -34,24 +34,26 @@ Route::middleware('auth')->group(function () {
             : redirect()->route('customer.dashboard');
     })->name('dashboard');
 
-    // Profil user
+    // 🔹 Profil pengguna
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// 🔹 Route global tanpa role
 Route::resource('swimmingpools', SwimmingpoolController::class);
 Route::resource('allotments', AllotmentController::class);
-// Route::resource('bookings', BookingController::class)->middleware(CheckExpiredPayments::class);
 Route::resource('bookings', BookingController::class);
 Route::resource('payments', PaymentController::class);
+
+// 🔹 Route notifikasi Midtrans (TIDAK pakai middleware auth!)
+Route::post('/payment/notification', [PaymentController::class, 'notification'])->name('payment.notification');
 
 // 🔹 Route untuk Admin
 Route::middleware(['auth', RoleMiddleware::class.':admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::resource('swimmingpools', AdminSwimmingpoolController::class);
     Route::resource('allotments', AdminAllotmentController::class);
-    // Route::resource('bookings', AdminBookingController::class)->middleware(CheckExpiredPayments::class);
     Route::resource('bookings', AdminBookingController::class);
     Route::resource('payments', AdminPaymentController::class);
 });
@@ -60,10 +62,9 @@ Route::middleware(['auth', RoleMiddleware::class.':admin'])->prefix('admin')->na
 Route::middleware(['auth', RoleMiddleware::class.':customer'])->prefix('customer')->name('customer.')->group(function () {
     Route::get('/dashboard', [CustomerController::class, 'dashboard'])->name('dashboard'); 
     Route::resource('swimmingpools', UserSwimmingpoolController::class);
-    // Route::resource('bookings', UserBookingController::class)->middleware(CheckExpiredPayments::class);
     Route::resource('bookings', UserBookingController::class);
     Route::resource('payments', UserPaymentController::class);
 });
 
-// 🔹 Include file route authentication (Login, Register, Logout)
+// 🔹 Route auth bawaan Laravel
 require __DIR__.'/auth.php';
