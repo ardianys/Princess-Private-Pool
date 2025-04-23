@@ -10,7 +10,10 @@
 
         <div class="mb-3">
             <label for="payment_method" class="form-label">Metode Pembayaran</label>
-            <input type="text" name="payment_method" id="payment_method" class="form-control" value="{{ $payment->payment_method }}" required>
+            <input type="text" name="payment_method" id="payment_method" class="form-control" value="{{ old('payment_method', $payment->payment_method) }}" required>
+            @error('payment_method')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="mb-3">
@@ -20,6 +23,9 @@
                 <option value="paid" {{ $payment->status === 'paid' ? 'selected' : '' }}>Paid</option>
                 <option value="canceled" {{ $payment->status === 'canceled' ? 'selected' : '' }}>Canceled</option>
             </select>
+            @error('status')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
 
         <button type="submit" class="btn btn-success">Simpan</button>

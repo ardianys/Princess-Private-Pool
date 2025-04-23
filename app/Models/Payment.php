@@ -15,7 +15,8 @@ class Payment extends Model
         'total_payment',
         'status',
         'payment_method',
-        'expired_time',
+        // 'expired_time',
+        'snap_token',
     ];
 
     public function booking()

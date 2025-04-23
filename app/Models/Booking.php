@@ -47,4 +47,9 @@ class Booking extends Model
     {
         return $this->belongsTo(Allotment::class);
     }
+    public function payment()
+    {
+        return $this->hasOne(\App\Models\Payment::class);
+    }
+
 }

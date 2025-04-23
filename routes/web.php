@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\User\CustomerController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SwimmingpoolController as AdminSwimmingpoolController;
 use App\Http\Controllers\User\SwimmingpoolController as UserSwimmingpoolController;
 use App\Http\Controllers\SwimmingpoolController;
@@ -50,8 +51,9 @@ Route::resource('payments', PaymentController::class);
 Route::post('/payment/notification', [PaymentController::class, 'notification'])->name('payment.notification');
 
 // 🔹 Route untuk Admin
+// 🔹 Route untuk Admin
 Route::middleware(['auth', RoleMiddleware::class.':admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard'); // Menggunakan DashboardController
     Route::resource('swimmingpools', AdminSwimmingpoolController::class);
     Route::resource('allotments', AdminAllotmentController::class);
     Route::resource('bookings', AdminBookingController::class);

@@ -93,55 +93,71 @@
         <h1 class="dashboard-title">Admin Dashboard - Princess Private Pools</h1>
 
         <div class="btn-group-custom">
-            <a href="{{ route('swimmingpools.index') }}" class="btn btn-primary">Kelola Swimming Pools</a>
-            <a href="{{ route('allotments.index') }}" class="btn btn-success">Kelola Allotments</a>
-            <a href="{{ route('bookings.index') }}" class="btn btn-warning text-white">Kelola Bookings</a>
-            <a href="{{ route('payments.index') }}" class="btn btn-secondary">Kelola Payments</a>
+            <a href="{{ route('swimmingpools.index') }}" class="btn btn-primary">Swimming Pools</a>
+            <a href="{{ route('allotments.index') }}" class="btn btn-success">Allotments</a>
+            <a href="{{ route('bookings.index') }}" class="btn btn-warning text-white">Bookings</a>
+            <a href="{{ route('payments.index') }}" class="btn btn-secondary">Payments</a>
         </div>
 
         <!-- Data Swimming Pools -->
         <h3 class="section-title">Data Swimming Pools</h3>
-        <ul class="list-group">
-            @foreach ($swimmingpools as $swimmingpool)
-                <li class="list-group-item">
-                    {{ $swimmingpool->name }}
-                    <a href="{{ route('swimmingpools.show', $swimmingpool->id) }}" class="list-link">[Lihat]</a>
-                </li>
-            @endforeach
-        </ul>
+        @if($swimmingpools->isEmpty())
+            <p>Not Found!</p>
+        @else
+            <ul class="list-group">
+                @foreach ($swimmingpools as $swimmingpool)
+                    <li class="list-group-item">
+                        {{ $swimmingpool->name }}
+                        <a href="{{ route('swimmingpools.show', $swimmingpool->id) }}" class="list-link">[Lihat]</a>
+                    </li>
+                @endforeach
+            </ul>
+        @endif
 
         <!-- Data Allotments -->
         <h3 class="section-title">Data Allotments</h3>
-        <ul class="list-group">
-            @foreach ($allotments as $allotment)
-                <li class="list-group-item">
-                    {{ $allotment->date }}
-                    <a href="{{ route('allotments.show', $allotment->id) }}" class="list-link">[Lihat]</a>
-                </li>
-            @endforeach
-        </ul>
+        @if($allotments->isEmpty())
+            <p>Not Found!</p>
+        @else
+            <ul class="list-group">
+                @foreach ($allotments as $allotment)
+                    <li class="list-group-item">
+                        {{ $allotment->date }}
+                        <a href="{{ route('allotments.show', $allotment->id) }}" class="list-link">[Lihat]</a>
+                    </li>
+                @endforeach
+            </ul>
+        @endif
 
         <!-- Data Bookings -->
         <h3 class="section-title">Data Bookings</h3>
-        <ul class="list-group">
-            @foreach ($bookings as $booking)
-                <li class="list-group-item">
-                    {{ $booking->user->name }} - {{ $booking->total_person }} person
-                    <a href="{{ route('bookings.show', $booking->id) }}" class="list-link">[Lihat]</a>
-                </li>
-            @endforeach
-        </ul>
+        @if($bookings->isEmpty())
+            <p>Not Found!</p>
+        @else
+            <ul class="list-group">
+                @foreach ($bookings as $booking)
+                    <li class="list-group-item">
+                        {{ $booking->user->name }} - {{ $booking->total_person }} person
+                        <a href="{{ route('bookings.show', $booking->id) }}" class="list-link">[Lihat]</a>
+                    </li>
+                @endforeach
+            </ul>
+        @endif
 
         <!-- Data Payments -->
         <h3 class="section-title">Data Payments</h3>
-        <ul class="list-group">
-            @foreach ($payments as $payment)
-                <li class="list-group-item">
-                    {{ $payment->user->name }} - Rp{{ number_format($payment->total_payments, 0, ',', '.') }}
-                    <a href="{{ route('payments.show', $payment->id) }}" class="list-link">[Lihat]</a>
-                </li>
-            @endforeach
-        </ul>
+        @if($payments->isEmpty())
+            <p>Not Found!</p>
+        @else
+            <ul class="list-group">
+                @foreach ($payments as $payment)
+                    <li class="list-group-item">
+                        {{ $payment->user->name }} - Rp{{ number_format($payment->total_payments, 0, ',', '.') }}
+                        <a href="{{ route('payments.show', $payment->id) }}" class="list-link">[Lihat]</a>
+                    </li>
+                @endforeach
+            </ul>
+        @endif
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

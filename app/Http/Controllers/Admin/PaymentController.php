@@ -13,19 +13,26 @@ use Illuminate\Support\Str;
 
 class PaymentController extends Controller
 {
-    public function __construct()
+    // public function __construct()
+    // {
+    //     $this->middleware(['auth', 'role:admin']); // Hanya admin
+    // }
+
+    // Tampilkan semua pembayaran untuk admin
+    public function index()
     {
-        $this->middleware(['auth', 'role:admin']); // Pastikan hanya admin yang dapat mengakses
+        $payments = Payment::with('booking.user')->paginate(10);
+        return view('admin.payments.index', compact('payments'));
     }
 
-    // Menampilkan halaman pembayaran untuk admin
+    // Form untuk membuat pembayaran baru
     public function create()
     {
         $bookings = Booking::where('status', 'pending')->get();
         return view('admin.payments.create', compact('bookings'));
     }
 
-    // Membuat pembayaran melalui Midtrans
+    // Simpan dan buat transaksi Midtrans
     public function store(Request $request)
     {
         $request->validate([
@@ -33,99 +40,84 @@ class PaymentController extends Controller
             'payment_method' => 'required|string',
         ]);
 
-        $booking = Booking::findOrFail($request->booking_id);
-        $total = $booking->total_payments; // Harga total dari booking
+        $booking = Booking::with('user', 'swimmingpool')->findOrFail($request->booking_id);
+        $total = $booking->total_payments;
 
         // Konfigurasi Midtrans
         Config::$serverKey = config('midtrans.server_key');
-        Config::$clientKey = config('midtrans.client_key');
         Config::$isSanitized = true;
         Config::$is3ds = true;
 
-        // Buat transaksi di Midtrans
-        $transaction_details = [
-            'order_id' => 'ORDER-' . Str::random(10),  // ID unik untuk transaksi
-            'gross_amount' => $total,  // Jumlah total pembayaran
-        ];
+        $order_id = 'ORDER-' . Str::random(10);
 
-        $customer_details = [
-            'first_name' => $booking->user->name,
-            'email' => $booking->user->email,
-            'phone' => $booking->user->phone,
-        ];
-
-        $item_details = [
-            [
-                'id' => 'item01',
-                'price' => $total,
-                'quantity' => 1,
-                'name' => 'Pembayaran Booking ' . $booking->swimmingpool->name,
+        $params = [
+            'transaction_details' => [
+                'order_id' => $order_id,
+                'gross_amount' => $total,
+            ],
+            'customer_details' => [
+                'first_name' => $booking->user->name,
+                'email' => $booking->user->email,
+                'phone' => $booking->user->phone ?? '0811111111',
+            ],
+            'item_details' => [
+                [
+                    'id' => 'item01',
+                    'price' => $total,
+                    'quantity' => 1,
+                    'name' => 'Pembayaran Booking ' . $booking->swimmingpool->name,
+                ]
             ]
         ];
 
-        $params = [
-            'transaction_details' => $transaction_details,
-            'customer_details' => $customer_details,
-            'item_details' => $item_details,
-        ];
-
         try {
-            $snapToken = Snap::getSnapToken($params);  // Mendapatkan Snap Token untuk dikirim ke frontend
+            $snapToken = Snap::getSnapToken($params);
         } catch (\Exception $e) {
-            return back()->with('error', 'Gagal membuat transaksi. Silakan coba lagi.');
+            return back()->with('error', 'Gagal membuat transaksi Midtrans.');
         }
 
-        // Menyimpan data pembayaran
-        $payment = Payment::create([
+        Payment::create([
             'booking_id' => $booking->id,
-            'slug' => Str::uuid(),
+            'slug' => $order_id,
             'total_payment' => $total,
             'payment_method' => $request->payment_method,
             'status' => 'pending',
             'snap_token' => $snapToken,
-            'expired_time' => now()->addHours(3),
         ]);
 
-        return view('admin.payments.confirm', compact('snapToken', 'payment'));
+        return redirect()->route('admin.payments.index')->with('success', 'Pembayaran berhasil dibuat.');
     }
 
-    // Menangani notifikasi dari Midtrans
-    public function notification(Request $request)
-    {
-        $notif = new Notification();
-        $transaction_status = $notif->transaction_status;
-        $order_id = $notif->order_id;
-        $fraud_status = $notif->fraud_status;
-
-        // Cari pembayaran berdasarkan order_id
-        $payment = Payment::where('slug', $order_id)->first();
-
-        if ($transaction_status == 'capture') {
-            if ($fraud_status == 'challenge') {
-                // Pembayaran berhasil namun masih membutuhkan verifikasi
-                $payment->update(['status' => 'pending']);
-            } else {
-                // Pembayaran berhasil
-                $payment->update(['status' => 'paid']);
-            }
-        } elseif ($transaction_status == 'settlement') {
-            $payment->update(['status' => 'paid']);
-        } elseif ($transaction_status == 'deny') {
-            $payment->update(['status' => 'canceled']);
-        } elseif ($transaction_status == 'expire') {
-            $payment->update(['status' => 'expired']);
-        } elseif ($transaction_status == 'cancel') {
-            $payment->update(['status' => 'canceled']);
-        }
-
-        // Update status booking
-        $payment->booking->update(['status' => $payment->status]);
-
-        return response()->json(['status' => 'success']);
-    }
-
+    // Tampilkan detail pembayaran
     public function show(Payment $payment)
     {
         return view('admin.payments.show', compact('payment'));
+    }
+
+    // Proses notifikasi dari Midtrans (snap callback)
+    public function notification(Request $request)
+    {
+        try {
+            $notif = new Notification();
+
+            $transaction = $notif->transaction_status;
+            $order_id = $notif->order_id;
+
+            $payment = Payment::where('slug', $order_id)->first();
+
+            if (!$payment) return;
+
+            if ($transaction == 'settlement') {
+                $payment->status = 'paid';
+            } elseif ($transaction == 'cancel' || $transaction == 'expire') {
+                $payment->status = 'canceled';
+            } elseif ($transaction == 'pending') {
+                $payment->status = 'pending';
+            }
+
+            $payment->save();
+        } catch (\Exception $e) {
+            \Log::error('Midtrans notification error: ' . $e->getMessage());
+        }
     }
 }

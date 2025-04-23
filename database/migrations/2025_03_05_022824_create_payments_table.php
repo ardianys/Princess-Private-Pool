@@ -18,7 +18,8 @@ return new class extends Migration
         $table->integer('total_payment'); // total booking + biaya admin
         $table->enum('status', ['pending', 'paid', 'canceled'])->default('pending');
         $table->string('payment_method')->nullable(); // misal: transfer bank
-        $table->timestamp('expired_time')->nullable(); // expired 3 jam
+        // $table->timestamp('expired_time')->nullable(); // expired 3 jam
+        $table->text('snap_token'); 
         $table->timestamps();
         });
     }
