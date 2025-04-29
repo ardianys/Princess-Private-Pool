@@ -29,6 +29,7 @@ class BookingController extends Controller
 
     public function store(Request $request) {
         $request->validate([
+            'user_id'           => 'required|exists:users,id',
             'swimmingpool_id'   => 'required|exists:swimmingpools,id',
             'allotment_id'      => 'required|exists:allotments,id',
             'total_person'      => 'required|integer|min:1',
@@ -49,7 +50,7 @@ class BookingController extends Controller
         
         // Menyimpan data booking
         $booking = Booking::create([
-            'user_id'               => auth()->id(),
+            'user_id'               => $request->user_id,
             'swimmingpool_id'       => $request->swimmingpool_id,
             'allotment_id'          => $request->allotment_id,
             'slug'                  => Str::random(40),

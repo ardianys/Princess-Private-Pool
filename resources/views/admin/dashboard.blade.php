@@ -93,10 +93,10 @@
         <h1 class="dashboard-title">Admin Dashboard - Princess Private Pools</h1>
 
         <div class="btn-group-custom">
-            <a href="{{ route('swimmingpools.index') }}" class="btn btn-primary">Swimming Pools</a>
-            <a href="{{ route('allotments.index') }}" class="btn btn-success">Allotments</a>
-            <a href="{{ route('bookings.index') }}" class="btn btn-warning text-white">Bookings</a>
-            <a href="{{ route('payments.index') }}" class="btn btn-secondary">Payments</a>
+            <a href="{{ route('admin.swimmingpools.index') }}" class="btn btn-primary">Swimming Pools</a>
+            <a href="{{ route('admin.allotments.index') }}" class="btn btn-success">Allotments</a>
+            <a href="{{ route('admin.bookings.index') }}" class="btn btn-warning text-white">Bookings</a>
+            <a href="{{ route('admin.payments.index') }}" class="btn btn-secondary">Payments</a>
         </div>
 
         <!-- Data Swimming Pools -->
@@ -108,7 +108,7 @@
                 @foreach ($swimmingpools as $swimmingpool)
                     <li class="list-group-item">
                         {{ $swimmingpool->name }}
-                        <a href="{{ route('swimmingpools.show', $swimmingpool->id) }}" class="list-link">[Lihat]</a>
+                        <a href="{{ route('admin.swimmingpools.show', $swimmingpool->id) }}" class="list-link">[Lihat]</a>
                     </li>
                 @endforeach
             </ul>
@@ -123,7 +123,7 @@
                 @foreach ($allotments as $allotment)
                     <li class="list-group-item">
                         {{ $allotment->date }}
-                        <a href="{{ route('allotments.show', $allotment->id) }}" class="list-link">[Lihat]</a>
+                        <a href="{{ route('admin.allotments.show', $allotment->id) }}" class="list-link">[Lihat]</a>
                     </li>
                 @endforeach
             </ul>
@@ -138,7 +138,7 @@
                 @foreach ($bookings as $booking)
                     <li class="list-group-item">
                         {{ $booking->user->name }} - {{ $booking->total_person }} person
-                        <a href="{{ route('bookings.show', $booking->id) }}" class="list-link">[Lihat]</a>
+                        <a href="{{ route('admin.bookings.show', $booking->id) }}" class="list-link">[Lihat]</a>
                     </li>
                 @endforeach
             </ul>
@@ -153,7 +153,7 @@
                 @foreach ($payments as $payment)
                     <li class="list-group-item">
                         {{ $payment->user->name }} - Rp{{ number_format($payment->total_payments, 0, ',', '.') }}
-                        <a href="{{ route('payments.show', $payment->id) }}" class="list-link">[Lihat]</a>
+                        <a href="{{ route('admin.payments.show', $payment->id) }}" class="list-link">[Lihat]</a>
                     </li>
                 @endforeach
             </ul>

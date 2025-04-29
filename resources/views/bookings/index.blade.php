@@ -122,7 +122,7 @@
                                 {{ session('success') }}
                             </div>
                         @endif
-                        <a href="{{ route('bookings.create') }}" class="btn btn-primary mt-3">+ Add Booking</a>
+                        <a href="{{ route('customer.bookings.create') }}" class="btn btn-primary mt-3">+ Add Booking</a>
                         <table class="table mt-3">
                             <thead>
                                 <tr>
@@ -134,7 +134,7 @@
                                     <th>Total Payment</th>
                                     <th>Payment Method</th>
                                     <th>Status</th>
-                                    <th>Expired Time</th>
+                                    {{-- <th>Expired Time</th> --}}
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -151,11 +151,11 @@
                                         <td style="color: {{ $booking->status == 'pending' ? 'red' : 'green' }};">
                                             {{ ucfirst($booking->status) }}
                                         </td>
-                                        <td>{{ $booking->expired_time_payments }}</td>
+                                        {{-- <td>{{ $booking->expired_time_payments }}</td> --}}
                                         <td class="text-center">
-                                            <a href="{{ route('bookings.show', $booking) }}" class="btn btn-secondary">Detail</a>
-                                            <a href="{{ route('bookings.edit', $booking) }}" class="btn btn-secondary">Edit</a>
-                                            <form action="{{ route('bookings.destroy', $booking) }}" method="POST" style="display:inline;">
+                                            <a href="{{ route('customer.bookings.show', $booking) }}" class="btn btn-secondary">Detail</a>
+                                            <a href="{{ route('customer.bookings.edit', $booking) }}" class="btn btn-secondary">Edit</a>
+                                            <form action="{{ route('customer.bookings.destroy', $booking) }}" method="POST" style="display:inline;">
                                                 @csrf @method('DELETE')
                                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Cancel</button>
                                             </form>

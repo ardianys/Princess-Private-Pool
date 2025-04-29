@@ -140,8 +140,8 @@
                             <div class="mb-4">
                                 <label for="payment_method" class="form-label">Payment Method:</label>
                                 <select name="payment_method" id="payment_method" class="form-control" required>
-                                    <option value="Bank Transfer">Bank Transfer</option>
-                                    <option value="E-Wallet">E-Wallet</option>
+                                    <option value="Bank Transfer">Cash</option>
+                                    <option value="E-Wallet">Midtrans</option>
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-primary">Book Now</button>

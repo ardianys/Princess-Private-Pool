@@ -116,7 +116,7 @@
                                 </ul>
                             </div>
                         @endif
-                        <form action="{{ route('bookings.update', $booking) }}" method="POST">
+                        <form action="{{ route('customer.bookings.update', $booking) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <div class="mb-4">
@@ -129,7 +129,7 @@
                             <button type="submit" class="btn btn-primary">Update</button>
                         </form>
                         <br>
-                        <a href="{{ route('bookings.index') }}" class="btn btn-secondary mt-3">Back</a>
+                        <a href="{{ route('customer.bookings.index') }}" class="btn btn-secondary mt-3">Back</a>
                     </div>
                 </div>
             </div>

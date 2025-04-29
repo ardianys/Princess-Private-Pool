@@ -118,6 +118,14 @@
                         <form action="{{ route('admin.bookings.store') }}" method="POST">
                             @csrf
                             <div class="mb-4">
+                                <label for="suser_id" class="form-label">User:</label>
+                                <select name="user_id" id="user_id" class="form-control" required>
+                                    @foreach (\App\Models\User::all() as $user)
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-4">
                                 <label for="swimmingpool_id" class="form-label">Swimming Pool:</label>
                                 <select name="swimmingpool_id" id="swimmingpool_id" class="form-control" required>
                                     @foreach (\App\Models\Swimmingpool::all() as $pool)
@@ -140,8 +148,8 @@
                             <div class="mb-4">
                                 <label for="payment_method" class="form-label">Payment Method:</label>
                                 <select name="payment_method" id="payment_method" class="form-control" required>
-                                    <option value="Bank Transfer">Bank Transfer</option>
-                                    <option value="E-Wallet">E-Wallet</option>
+                                    <option value="Bank Transfer">Cash</option>
+                                    <option value="E-Wallet">Midtrans</option>
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-primary">Book Now</button>
