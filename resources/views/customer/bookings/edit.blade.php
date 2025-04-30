@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Create Booking</title>
+    <title>Edit Booking</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        /* ... (styles from create swimming pool) ... */
         html, body {
             height: 100%;
             margin: 0;
@@ -99,51 +100,41 @@
     </style>
 </head>
 <body>
+    <div class="sunlight-effect"></div>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card p-4">
-                    <h2>Create Booking</h2>
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
-                        </div>
-                    @endif
-                    <form action="{{ route('customer.bookings.store') }}" method="POST">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="swimmingpool_id" class="form-label">Swimming Pool:</label>
-                            <select name="swimmingpool_id" id="swimmingpool_id" class="form-control" required>
-                                @foreach (\App\Models\Swimmingpool::all() as $pool)
-                                    <option value="{{ $pool->id }}">{{ $pool->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="allotment_id" class="form-label">Allotment:</label>
-                            <select name="allotment_id" id="allotment_id" class="form-control" required>
-                                @foreach (\App\Models\Allotment::all() as $allotment)
-                                    <option value="{{ $allotment->id }}">{{ $allotment->date }} (Rp {{ number_format($allotment->price_per_person, 0, ',', '.') }})</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="total_person" class="form-label">Total People:</label>
-                            <input type="number" name="total_person" class="form-control" required min="1">
-                        </div>
-                        <div class="mb-3">
-                            <label for="payment_method" class="form-label">Payment Method:</label>
-                            <select name="payment_method" class="form-control" required>
-                                <option value="Bank Transfer">Cash</option>
-                                <option value="E-Wallet">Midtrans</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Book Now</button>
-                    </form>
-                    <a href="{{ route('customer.bookings.index') }}" class="btn btn-secondary mt-3">Back</a>
+                <div class="card">
+                    <div class="card-body">
+                        <h2>Edit Booking</h2>
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        <form action="{{ route('customer.bookings.update', $booking) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="mb-4">
+                                <label for="status" class="form-label">Status:</label>
+                                <select name="status" id="status" class="form-control" required>
+                                    <option value="pending" {{ $booking->status == 'pending' ? 'selected' : '' }}>Pending</option>
+                                    <option value="paid" {{ $booking->status == 'paid' ? 'selected' : '' }}>Paid</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </form>
+                        <br>
+                        <a href="{{ route('customer.bookings.index') }}" class="btn btn-secondary mt-3">Back</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

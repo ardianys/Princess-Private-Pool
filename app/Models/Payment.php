@@ -11,12 +11,13 @@ class Payment extends Model
 
     protected $fillable = [
         'booking_id',
-        'slug',
-        'total_payment',
-        'status',
-        'payment_method',
-        // 'expired_time',
         'snap_token',
+        'order_id',
+        'transaction_status',
+        'payment_type',
+        'va_number',
+        'amount',
+        'expired_at',
     ];
 
     public function booking()

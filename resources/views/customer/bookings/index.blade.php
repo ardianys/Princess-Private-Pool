@@ -152,8 +152,8 @@
                                         {{-- <td>{{ $booking->expired_time_payments }}</td> --}}
                                         <td class="text-center">
                                             <a href="{{ route('customer.bookings.show', $booking) }}" class="btn btn-secondary">Detail</a>
-                                            @if($booking->status == 'pending')
-                                                <a href="{{ route('customer.payments.create', ['booking_id' => $booking->id]) }}" class="btn btn-primary mt-1">Bayar</a>
+                                            @if($booking->status == 'pending' && $booking->payment)
+                                                <button class="btn btn-primary mt-1 pay-button" data-snap-token="{{ $booking->payment->snap_token }}">Pay</button>
                                             @endif
                                             <form action="{{ route('customer.bookings.destroy', $booking) }}" method="POST" style="display:inline;">
                                                 @csrf @method('DELETE')
@@ -175,4 +175,27 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}"></script>
+<script>
+    document.querySelectorAll('.pay-button').forEach(function(button) {
+        button.addEventListener('click', function () {
+            var snapToken = this.dataset.snapToken;
+            window.snap.pay(snapToken, {
+                onSuccess: function(result) {
+                    alert("Payment Successful!");
+                    location.reload(); // refresh halaman untuk update status
+                },
+                onPending: function(result) {
+                    alert("Waiting for payment...");
+                },
+                onError: function(result) {
+                    alert("Payment failed. Please try again.");
+                },
+                onClose: function() {
+                    alert('You close the payment popup.');
+                }
+            });
+        });
+    });
+</script>
 </html>

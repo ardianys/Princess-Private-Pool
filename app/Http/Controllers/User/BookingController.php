@@ -6,8 +6,11 @@ use Illuminate\Support\Str;
 use App\Http\Controllers\Controller; 
 use Illuminate\Http\Request;
 use App\Models\Booking;
+use App\Models\Payment;
 use App\Models\Allotment;
 use App\Models\User;
+use Midtrans\Snap;
+use Midtrans\Config;
 use App\Models\Swimmingpool;
 
 
@@ -20,7 +23,11 @@ class BookingController extends Controller
     // }
 
     public function index() {
-        $bookings = Booking::where('user_id', auth()->id())->get();
+        // $bookings = Booking::where('user_id', auth()->id())->get();
+        $bookings = Booking::with(['swimmingpool', 'allotment', 'payment'])
+            ->where('user_id', auth()->id())
+            ->latest()
+            ->get();
         return view('customer.bookings.index', compact('bookings'));
     }
 
@@ -59,6 +66,39 @@ class BookingController extends Controller
             'payment_method'        => $request->payment_method,
             'status'                => 'pending',  // Status default
             // 'expired_time_payments' => now()->addHours(3), // Expired dalam 3 jam
+        ]);
+
+        // 3. Setup Midtrans config
+        Config::$serverKey = config('midtrans.server_key');
+        Config::$isProduction = config('midtrans.is_production');
+        Config::$isSanitized = true;
+        Config::$is3ds = true;
+
+        // 4. Buat Order ID unik
+        $orderId = 'ORDER-' . $booking->id . '-' . time();
+
+        // 5. Siapkan data Snap Midtrans
+        $params = [
+            'transaction_details' => [
+                'order_id' => $orderId,
+                'gross_amount' => (int) $total_payments,
+            ],
+            'customer_details' => [
+                'first_name' => auth()->user()->name,
+                'email' => auth()->user()->email,
+            ],
+        ];
+
+        $snapToken = Snap::getSnapToken($params);
+
+        // 6. Simpan ke tabel payments
+        Payment::create([
+            'booking_id' => $booking->id,
+            'order_id' => $orderId,
+            'snap_token' => $snapToken,
+            'transaction_status' => 'pending',
+            'amount' => $total_payments,
+            'payment_type' => $request->payment_method, // sementara dari input
         ]);
 
         // Redirect ke halaman daftar booking dengan pesan sukses

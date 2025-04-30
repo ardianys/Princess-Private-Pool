@@ -98,27 +98,40 @@
     </style>
 </head>
 <body>
-    <div class="sunlight-effect"></div>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card">
-                    <div class="card-body">
-                        <h1>Booking Details</h1>
-                        <p><strong>User:</strong> {{ $booking->user->name }}</p>
-                        <p><strong>Swimming Pool:</strong> {{ $booking->swimmingpool->name }}</p>
-                        <p><strong>Allotment:</strong> {{ $booking->allotment->date }}</p>
-                        <p><strong>Total People:</strong> {{ $booking->total_person }}</p>
-                        <p><strong>Total Payment:</strong> Rp {{ number_format($booking->total_payments, 0, ',', '.') }}</p>
-                        <p><strong>Payment Method:</strong> {{ $booking->payment_method }}</p>
-                        <p><strong>Status:</strong> {{ ucfirst($booking->status) }}</p>
-                        {{-- <p><strong>Expired Time:</strong> {{ $booking->expired_time_payments }}</p> --}}
-                        <a href="{{ route('customer.bookings.index') }}" class="btn btn-primary">Back</a>
-                    </div>
+                <div class="card p-4">
+                    <h1>Booking Details</h1>
+                    <p><strong>User:</strong> {{ $booking->user->name }}</p>
+                    <p><strong>Swimming Pool:</strong> {{ $booking->swimmingpool->name }}</p>
+                    <p><strong>Allotment:</strong> {{ $booking->allotment->date }}</p>
+                    <p><strong>Total People:</strong> {{ $booking->total_person }}</p>
+                    <p><strong>Total Payment:</strong> Rp {{ number_format($booking->total_payments, 0, ',', '.') }}</p>
+                    <p><strong>Payment Method:</strong> {{ $booking->payment_method }}</p>
+                    <p><strong>Status:</strong> {{ ucfirst($booking->status) }}</p>
+
+                    @if($booking->payment_method === 'E-Wallet' && $booking->status === 'belum bayar')
+                        <button id="pay-button" class="btn btn-primary mt-3">Bayar Sekarang</button>
+                    @endif
+
+                    <a href="{{ route('customer.bookings.index') }}" class="btn btn-secondary mt-3">Back</a>
                 </div>
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    @if($booking->payment_method === 'E-Wallet' && $booking->status === 'belum bayar')
+        <script src="https://app.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+        <script type="text/javascript">
+            document.getElementById('pay-button').addEventListener('click', function () {
+                window.snap.pay('{{ $booking->payment->snap_token }}', {
+                    onSuccess: function(result){ location.reload(); },
+                    onPending: function(result){ location.reload(); },
+                    onError: function(result){ alert("Payment failed"); }
+                });
+            });
+        </script>
+    @endif
 </body>
 </html>
