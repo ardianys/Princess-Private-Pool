@@ -51,7 +51,6 @@ Route::resource('payments', PaymentController::class);
 Route::post('/payment/notification', [PaymentController::class, 'notification'])->name('payment.notification');
 
 // 🔹 Route untuk Admin
-// 🔹 Route untuk Admin
 Route::middleware(['auth', RoleMiddleware::class.':admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard'); // Menggunakan DashboardController
     Route::resource('swimmingpools', AdminSwimmingpoolController::class);

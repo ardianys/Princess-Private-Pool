@@ -20,6 +20,10 @@ class Payment extends Model
         'expired_at',
     ];
 
+    protected $casts = [
+        'expired_at' => 'datetime',
+    ];
+
     public function booking()
     {
         return $this->belongsTo(Booking::class);

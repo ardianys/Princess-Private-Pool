@@ -183,7 +183,7 @@
             window.snap.pay(snapToken, {
                 onSuccess: function(result) {
                     alert("Payment Successful!");
-                    location.reload(); // refresh halaman untuk update status
+                    location.reload();
                 },
                 onPending: function(result) {
                     alert("Waiting for payment...");
@@ -192,7 +192,7 @@
                     alert("Payment failed. Please try again.");
                 },
                 onClose: function() {
-                    alert('You close the payment popup.');
+                    alert("Payment popup closed.");
                 }
             });
         });

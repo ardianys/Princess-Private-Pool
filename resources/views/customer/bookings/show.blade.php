@@ -112,7 +112,7 @@
                     <p><strong>Status:</strong> {{ ucfirst($booking->status) }}</p>
 
                     @if($booking->payment_method === 'E-Wallet' && $booking->status === 'belum bayar')
-                        <button id="pay-button" class="btn btn-primary mt-3">Bayar Sekarang</button>
+                        <button id="pay-button" class="btn btn-primary mt-3">Pay</button>
                     @endif
 
                     <a href="{{ route('customer.bookings.index') }}" class="btn btn-secondary mt-3">Back</a>
@@ -121,16 +121,31 @@
         </div>
     </div>
 
-    @if($booking->payment_method === 'E-Wallet' && $booking->status === 'belum bayar')
-        <script src="https://app.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
-        <script type="text/javascript">
-            document.getElementById('pay-button').addEventListener('click', function () {
-                window.snap.pay('{{ $booking->payment->snap_token }}', {
-                    onSuccess: function(result){ location.reload(); },
-                    onPending: function(result){ location.reload(); },
-                    onError: function(result){ alert("Payment failed"); }
+    @if($booking->payment_method === 'E-Wallet' && $booking->status === 'pending' && $booking->payment && $booking->payment->snap_token)
+        <button id="pay-button" class="btn btn-primary mt-3">Pay</button>
+        <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}"></script>
+        <script>
+            const payButton = document.querySelector('.pay-button');
+            if (payButton) {
+                payButton.addEventListener('click', function () {
+                    const snapToken = this.dataset.snapToken;
+                    window.snap.pay(snapToken, {
+                        onSuccess: function(result) {
+                            alert("Payment successful!");
+                            location.reload();
+                        },
+                        onPending: function(result) {
+                            alert("Waiting for payment...");
+                        },
+                        onError: function(result) {
+                            alert("Payment failed.");
+                        },
+                        onClose: function() {
+                            alert("You closed the payment popup.");
+                        }
+                    });
                 });
-            });
+            }
         </script>
     @endif
 </body>

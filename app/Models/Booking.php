@@ -50,7 +50,7 @@ class Booking extends Model
     }
     public function payment()
     {
-        return $this->hasOne(\App\Models\Payment::class);
+        return $this->hasOne(Payment::class);
     }
 
 }
