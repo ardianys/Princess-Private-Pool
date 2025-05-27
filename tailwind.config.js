@@ -2,20 +2,15 @@ import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
 
 /** @type {import('tailwindcss').Config} */
-export default {
-    content: [
-        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
-        './storage/framework/views/*.php',
-        './resources/views/**/*.blade.php',
-    ],
+module.exports = {
+  content: [
+    "./resources/views/layouts/app.blade.php",
+    "./resources/js/app.js",
+    "./resources/css/app.css",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
 
-    theme: {
-        extend: {
-            fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-            },
-        },
-    },
-
-    plugins: [forms],
-};
