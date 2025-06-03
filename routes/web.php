@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\PaymentController as AdminPaymentController;
 use App\Http\Controllers\User\PaymentController as UserPaymentController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Middleware\RoleMiddleware;
+// use App\Http\Controllers\MidtransCallbackController;
 
 // 🔹 Halaman utama
 Route::get('/', function () {
@@ -46,6 +47,7 @@ Route::resource('swimmingpools', SwimmingpoolController::class);
 Route::resource('allotments', AllotmentController::class);
 Route::resource('bookings', BookingController::class);
 Route::resource('payments', PaymentController::class);
+// Route::post('/midtrans/callback', [MidtransCallbackController::class, 'receive']);
 
 // 🔹 Route notifikasi Midtrans (TIDAK pakai middleware auth!)
 Route::post('/payment/notification', [PaymentController::class, 'notification'])->name('payment.notification');
