@@ -1,0 +1,19 @@
+- untuk membersihkan config:
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
+
+
+-untuk membersihkan route:
+php artisan route:list	    Menampilkan semua route aktif
+php artisan route:cache	    Meng-cache route untuk mempercepat aplikasi (hanya untuk production)
+php artisan route:clear	    Menghapus file cache dari route yang sudah dicache
+php artisan config:clear	Menghapus cache konfigurasi
+php artisan view:clear	    Menghapus cache view
+php artisan cache:clear	    Menghapus semua cache general LaravelPerintah	Fungsi
+php artisan route:list	    Menampilkan semua route aktif
+php artisan route:cache	    Meng-cache route untuk mempercepat aplikasi (hanya untuk production)
+php artisan route:clear     Menghapus file cache dari route yang sudah dicache
+php artisan config:clear    Menghapus cache konfigurasi
+php artisan view:clear	    Menghapus cache view
+php artisan cache:clear	    Menghapus semua cache general Laravel
