@@ -52,7 +52,20 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://princess-private-pool-aisyahnanik95-gmailcoms-projects.vercel.app/'),
+    'url' => env('APP_URL', 'https://princess-private-pool.vercel.app'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Asset URL
+    |--------------------------------------------------------------------------
+    |
+    | This URL is used by the console to properly generate URLs when using
+    | the Artisan command line tool. You should set this to the root of
+    | your application so that it's used when generating asset URLs.
+    |
+    */
+
+    'asset_url' => env('ASSET_URL'),
 
     /*
     |--------------------------------------------------------------------------
