@@ -104,7 +104,7 @@ class BookingController extends Controller
             
             // Guzzle untuk panggil Snap API
         $client = new Client(); 
-        echo base64_encode('SB-Mid-server-eUOXCfMX0ThU0gjqLwGDRT4Y:');
+        echo base64_encode('SB-Mid-client-A5n5EnfGjI2CZ3tH');
         // die();
             //  try {
             $response = $client->post('https://app.sandbox.midtrans.com/snap/v1/transactions', [
