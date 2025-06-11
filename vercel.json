@@ -32,7 +32,7 @@
     "env": {
         "PHP_INI_SCAN_DIR": "api",
         "APP_ENV": "production",
-        "APP_DEBUG": "false",
+        "APP_DEBUG": "true",
         "APP_KEY": "base64:0jCuIBzpTCtkFLmeD/N+rRELI1qyK2Vt2s+hz0Me4W0=",
         "APP_URL": "https://princess-private-pool-kbcjfcaz0-ardianys-projects.vercel.app",
         "ASSET_URL": "https://princess-private-pool-kbcjfcaz0-ardianys-projects.vercel.app",
