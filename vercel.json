@@ -14,8 +14,7 @@
     "env": {
         "PHP_INI_SCAN_DIR": "api",
         "APP_ENV": "production",
-        "APP_DEBUG": "false",
-        "APP_KEY": "base64:0jCuIBzpTCtkFLmeD/N+rRELI1qyK2Vt2s+hz0Me4W0=",
+        "APP_DEBUG": "true",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
         "APP_PACKAGES_CACHE": "/tmp/packages.php",
