@@ -2,7 +2,6 @@
 
 use Illuminate\Foundation\Application;
 use App\Http\Middleware\RoleMiddleware;
-use App\Http\Middleware\TrustProxies;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
@@ -18,8 +17,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => RoleMiddleware::class,
         ]);
 
-        // Add TrustProxies middleware globally
-        $middleware->prepend(TrustProxies::class);
+        // Configure Laravel's built-in TrustProxies for Vercel
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
